@@ -51,6 +51,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
 import { NotifyService } from './views/services/notify.service';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
     IconSetModule.forRoot(),
     ReactiveFormsModule,
     ToastyModule.forRoot(),
-    LoadingBarHttpModule
+    LoadingBarHttpModule,
+    QRCodeModule
   ],
   declarations: [
     AppComponent,

@@ -1,0 +1,148 @@
+<div *ngIf="showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fa fa-align-justify"></i> item List
+        </div>
+        <div class="col-md-2 float-right card-right-button">
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Add item</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name English</th>
+            <th>Name Arabic</th>
+            <th>Unit Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="itemList.length === 0">
+            <td style="text-align: center;color: red" colspan="6">
+              "No data found"
+            </td>
+          </tr>
+          <tr *ngFor="let item of itemList">
+            <td> {{ item.code }}</td>
+            <td> {{ item.nameEn }}</td>
+            <td> {{ item.nameAr }}</td>
+            <td> {{ item.unitPrice }} {{ "JOD" }}</td>
+            <td>
+              <span *ngIf="item.status == 'ACTIVE'" class="badge badge-success">Active</span>
+              <span *ngIf="item.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
+            </td>
+            <td>
+              <button (click)='editItem(item)' type="button" class="btn btn-ghost-primary"><i class="cil-pen"></i></button>
+              <button (click)='activeOrInactive(item)' type="button" class="btn btn-ghost-warning"><i class="cil-power-standby"></i></button>
+              <button (click)='deleteItem(item)' type="button" class="btn btn-ghost-danger"><i class="cil-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">
+              <nav>
+                <ul class="pagination">
+                  <li *ngFor="let page of pages" (click)="onSelect(page)" [class.active]="page.pageName === activePage"
+                    class="page-item">
+                    <a class="page-link" href="javascript:void(0)">{{
+                      page.pageName
+                      }}</a>
+                  </li>
+                </ul>
+              </nav>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="!showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <form [formGroup]="itemForm" (ngSubmit)="save()">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Add item</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Back</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Code</label>
+              <input type="text" class="form-control" [formControl]="itemForm.controls['code']" id="alias" placeholder="Enter item code">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Name English</label>
+              <input type="text" class="form-control" [formControl]="itemForm.controls['nameEn']" id="alias" placeholder="Enter Name English">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Name Arabic</label>
+              <input type="text" class="form-control" [formControl]="itemForm.controls['nameAr']" id="alias" placeholder="Enter Name Arabic">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Unit Price</label>
+              <input type="text" class="form-control" [formControl]="itemForm.controls['unitPrice']" id="alias" placeholder="Enter Unit Price">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="ccmonth">Category</label>
+              <select [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
+                <option [value]="category.id" *ngFor="let category of categoryList">{{ category.nameEn }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Avatar</label>
+              <input type="file" class="form-control" [formControl]="itemForm.controls['avatar']" id="alias" placeholder="Upload item Image">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="name">Description</label>
+              <textarea [formControl]="itemForm.controls['description']" class="form-control" rows="4" cols="50">
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="save()">Save</button>
+              <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+                (click)="showTable = !showTable">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

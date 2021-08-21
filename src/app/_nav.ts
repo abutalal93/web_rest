@@ -7,13 +7,18 @@ export const navItems: INavData[] = [
     icon: 'icon-speedometer'
   },
   {
-    name: 'Menu Managment',
-    url: '/menu-managment',
+    name: 'Category Managment',
+    url: '/menu',
     icon: 'cil-menu'
   },
   {
+    name: 'Item Managment',
+    url: '/item',
+    icon: 'cil-cart'
+  },
+  {
     name: 'QR Managment',
-    url: '/qr-managment',
+    url: '/qrs',
     icon: 'cil-qr-code'
   },
   {

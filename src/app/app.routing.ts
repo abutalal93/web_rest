@@ -57,8 +57,16 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: 'restaurants',
-        loadChildren: () => import('./views/restaurants/restaurants.module').then(m => m.RestaurantsModule)
+        path: 'menu',
+        loadChildren: () => import('./views/menu/menu.module').then(m => m.MenuModule)
+      },
+      {
+        path: 'item',
+        loadChildren: () => import('./views/item/item.module').then(m => m.ItemModule)
+      },
+      {
+        path: 'qrs',
+        loadChildren: () => import('./views/qrs/qrs.module').then(m => m.QrsModule)
       }
     ]
   },
