@@ -1,0 +1,289 @@
+<div *ngIf="showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fa fa-align-justify"></i> Restaurant List
+        </div>
+        <div class="col-md-2 float-right card-right-button">
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Add Restaurant</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Brand Name</th>
+            <th>Commercial Register</th>
+            <th>Tax Number</th>
+            <th>Mobile Number</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="restaurantsList.length === 0">
+            <td style="text-align: center;color: red" colspan="7">
+              "No data found"
+            </td>
+          </tr>
+          <tr *ngFor="let rest of restaurantsList">
+            <td> {{ rest.brandNameEn }}</td>
+            <td> {{ rest.commercialRegister }}</td>
+            <td> {{ rest.taxNumber }}</td>
+            <td> {{ rest.mobileNumber }}</td>
+            <td> {{ rest.email }}</td>
+            <td>
+              <span *ngIf="rest.status == 'ACTIVE'" class="badge badge-success">Active</span>
+              <span *ngIf="rest.status == 'INACTIVE'" class="badge badge-error">Inactive</span>
+            </td>
+            <td>
+
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">
+              <nav>
+                <ul class="pagination">
+                  <li *ngFor="let page of pages" (click)="onSelect(page)" [class.active]="page.pageName === activePage"
+                    class="page-item">
+                    <a class="page-link" href="javascript:void(0)">{{
+                      page.pageName
+                      }}</a>
+                  </li>
+                </ul>
+              </nav>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="!showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <h6>General Information</h6>
+        </div>
+        <div class="col-md-2 float-right card-right-button">
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Commercial Register</label>
+            <input type="text" class="form-control" id="commercialRegister" placeholder="Enter Commercial Register">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Brand Name English</label>
+            <input type="text" class="form-control" id="brandNameEn" placeholder="Enter Brand Name English">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Brand Name Arabic</label>
+            <input type="text" class="form-control" id="brandNameAr" placeholder="Enter Brand Name Arabic">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">Tax Number</label>
+            <input type="text" class="form-control" id="taxNumber" placeholder="Enter Tax Number">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter Email">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">Phone Number</label>
+            <input type="text" class="form-control" id="mobileNumber" placeholder="Enter Mobile Number">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <h6>Address Information</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="ccmonth">Region</label>
+            <select class="form-control" id="region">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="ccmonth">City</label>
+            <select class="form-control" id="city">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="ccmonth">District</label>
+            <select class="form-control" id="district">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Street Name</label>
+            <input type="text" class="form-control" id="streetName" placeholder="Enter Street Name">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Building Number</label>
+            <input type="text" class="form-control" id="buildingNumber" placeholder="Enter Building Number">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter Address">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <h6>Authorized Information</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter First Name">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Second Name</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter Second Name">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Third Name</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter Third Name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" id="streetName" placeholder="Enter Last Name">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Mobile Number</label>
+            <input type="text" class="form-control" id="buildingNumber" placeholder="Enter Mobile Number">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Email</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter Email">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <h6>Attachment</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="name">Contract Document</label>
+            <input type="file" class="form-control" id="address" placeholder="Upload Contract Document">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="name">Restaurant Logo</label>
+            <input type="file" class="form-control" id="address" placeholder="Upload Contract Document">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <h6>Submit</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="saveRest()">Save</button>
+        <button style="margin: 2px;" type="button" class="btn btn-success px-4" (click)="showTable = !showTable">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
