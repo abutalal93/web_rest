@@ -52,6 +52,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { NotifyService } from './views/services/notify.service';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { QRCodeModule } from 'angularx-qrcode';
+import { CustomerComponent } from './views/customer/customer.component';
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CustomerComponent
   ],
   providers: [
     {

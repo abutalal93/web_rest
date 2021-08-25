@@ -1,0 +1,35 @@
+
+<div *ngIf="!isLoaded" class="row">
+</div>
+<div *ngIf="isLoaded" class="row">
+  <div class="col-sm-12 col-md-12">
+    <div class="card">
+      <div class="card-header">
+        Welcole to {{ qrInfo.brandName}}
+      </div>
+      <div class="card-body">
+        <img [src]="qrInfo.logo" style="width: 150px;" alt="rest Logo" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoaded" class="row">
+  <div *ngIf="qrInfo.categoryList && qrInfo.categoryList.length > 0" class="col-md-6">
+    <div class="card" style="cursor: pointer;" *ngFor="let category of qrInfo.categoryList" (click)="category.showItems = !category.showItems">
+      <div class="card-header">
+        {{ category.nameEn}}
+      </div>
+      <div class="card-body">
+        <!-- <img [src]="category.avatar" style="width: 150px;" alt="rest Logo" /> -->
+        <div *ngIf="category.showItems" class="col-md-3">
+          <div class="card" *ngFor="let item of category.itemList">
+            <div class="card-header">
+              {{ item.nameEn}} = {{ item.unitPrice }} {{ 'JOD' }} 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
