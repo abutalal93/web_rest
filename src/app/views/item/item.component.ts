@@ -69,7 +69,7 @@ export class ItemComponent implements OnInit {
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
       unitPrice: new FormControl('', [Validators.required]),
-      avatar: new FormControl('', [Validators.required]),
+      avatar: new FormControl(''),
       categoryId: new FormControl('', [Validators.required]),
       description: new FormControl(null,)
     });

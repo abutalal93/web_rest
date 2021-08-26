@@ -21,8 +21,7 @@
         {{ category.nameEn}}
       </div>
       <div class="card-body">
-        <!-- <img [src]="category.avatar" style="width: 150px;" alt="rest Logo" /> -->
-        <div *ngIf="category.showItems" class="col-md-3">
+        <div *ngIf="category.itemList.length > 0" class="col-md-3">
           <div class="card" *ngFor="let item of category.itemList">
             <div class="card-header">
               {{ item.nameEn}} = {{ item.unitPrice }} {{ 'JOD' }} 

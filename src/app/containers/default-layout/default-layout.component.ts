@@ -15,7 +15,7 @@ export class DefaultLayoutComponent {
     this.sidebarMinimized = e;
   }
 
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService) {
     
   }
 

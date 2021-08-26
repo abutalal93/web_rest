@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
       code: new FormControl('', [Validators.required]),
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
-      avatar: new FormControl('', [Validators.required]),
+      avatar: new FormControl(''),
     });
   }
 
