@@ -30,7 +30,7 @@
           <tr *ngFor="let qr of qrsList">
             <td><qrcode [qrdata]="qr.code" [width]="128" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode></td>
             <td> {{ qr.alias }}</td>
-            <td> {{ qr.createDate }}</td>
+            <td> {{ qr.createDate  | date:'short' }}</td>
             <td>
               <span *ngIf="qr.status == 'ACTIVE'" class="badge badge-success">Active</span>
               <span *ngIf="qr.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
