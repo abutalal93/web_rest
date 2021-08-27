@@ -61,7 +61,6 @@
     "ngx-cookie-service": "^12.0.3",
     "ngx-perfect-scrollbar": "^10.1.0",
     "rxjs": "^6.6.7",
-    "rxjs-compat": "^6.6.7",
     "simple-line-icons": "^2.5.5",
     "sweetalert2": "^11.1.4",
     "ts-helpers": "^1.1.2",

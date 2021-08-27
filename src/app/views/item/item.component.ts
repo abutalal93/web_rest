@@ -27,6 +27,8 @@ export class ItemComponent implements OnInit {
 
   itemForm: FormGroup;
 
+  editMode = false;
+
   async ngOnInit() {
     this.loadForm();
     await this.findItem();
@@ -65,10 +67,10 @@ export class ItemComponent implements OnInit {
 
   loadForm() {
     this.itemForm = new FormGroup({
-      code: new FormControl('', [Validators.required]),
+      itemId: new FormControl(''),
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
-      unitPrice: new FormControl('', [Validators.required]),
+      unitPrice: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
       avatar: new FormControl(''),
       categoryId: new FormControl('', [Validators.required]),
       description: new FormControl(null,)
@@ -116,9 +118,14 @@ export class ItemComponent implements OnInit {
     console.log("+this.activePage+", this.activePage);
   }
 
+  markFormGroupToched(){
+    (<any>Object).values(this.itemForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
 
   async save(){
-    this.httpService.markFormGroupTouched(this.itemForm);
+    this.markFormGroupToched();
 
     console.log(this.itemForm.valid);
 
@@ -149,13 +156,52 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  async update(){
+    this.markFormGroupToched();
 
-  editItem(Item){
+    console.log(this.itemForm.valid);
+
+    if (this.itemForm.valid) {
+
+      let request = {
+        method: "POST",
+        path: "rest/item/update",
+        body: this.itemForm.value
+      };
+
+      let response = await this.httpService.httpRequest(request);
+      console.log(response);
+      if(response.status == 200){
+
+        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+      
+      
+        this.showTable=!this.showTable;
+
+        this.itemForm.reset();
+
+        await this.findItem();
+
+      }else{
+        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+      }
+    }
+  }
+
+
+  editItem(item){
 
     this.showTable=!this.showTable;
 
-    this.itemForm.controls['alias'].setValue(Item.alias);
+    this.editMode = true;
 
+    this.itemForm.controls['itemId'].setValue(item.id);
+    this.itemForm.controls['categoryId'].setValue(item.categoryId);
+    this.itemForm.controls['nameEn'].setValue(item.nameEn);
+    this.itemForm.controls['nameAr'].setValue(item.nameAr);
+    this.itemForm.controls['avatar'].setValue(item.avatar);
+    this.itemForm.controls['unitPrice'].setValue(item.unitPrice);
+    this.itemForm.controls['description'].setValue(item.description);
   }
 
   deleteItem(Item){
@@ -254,5 +300,25 @@ export class ItemComponent implements OnInit {
         )
       }
     });
+  }
+
+
+  async uploadAttachment(file,controleName){
+    console.log('fileL: ',file);
+
+    let formData = new FormData(); 
+
+    formData.append("file",file[0]);
+
+    let request = {
+      method: "POST",
+      path: "file/upload",
+      body: formData
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    if (response.status == 200) {
+      this.itemForm.get(controleName).setValue(response.data.url)
+    }
   }
 }

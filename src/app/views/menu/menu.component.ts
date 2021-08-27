@@ -25,6 +25,8 @@ export class MenuComponent implements OnInit {
 
   categoryForm: FormGroup;
 
+  editMode = false;
+
   async ngOnInit() {
     this.loadForm();
     await this.findCategory();
@@ -36,7 +38,7 @@ export class MenuComponent implements OnInit {
 
   loadForm() {
     this.categoryForm = new FormGroup({
-      code: new FormControl('', [Validators.required]),
+      categoryId: new FormControl(''),
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
       avatar: new FormControl(''),
@@ -84,9 +86,15 @@ export class MenuComponent implements OnInit {
     console.log("+this.activePage+", this.activePage);
   }
 
+  markFormGroupToched(){
+    (<any>Object).values(this.categoryForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
 
   async save(){
-    this.httpService.markFormGroupTouched(this.categoryForm);
+
+    this.markFormGroupToched();
 
     if (this.categoryForm.valid) {
 
@@ -115,13 +123,48 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  async update(){
 
-  editQr(Category){
+    this.markFormGroupToched();
+
+    if (this.categoryForm.valid) {
+
+      let request = {
+        method: "POST",
+        path: "rest/category/update",
+        body: this.categoryForm.value
+      };
+
+      let response = await this.httpService.httpRequest(request);
+      console.log(response);
+      if(response.status == 200){
+
+        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+      
+      
+        this.showTable=!this.showTable;
+
+        this.categoryForm.reset();
+
+        await this.findCategory();
+
+      }else{
+        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+      }
+    }
+  }
+
+
+  editQr(category){
 
     this.showTable=!this.showTable;
 
-    this.categoryForm.controls['alias'].setValue(Category.alias);
+    this.editMode = true;
 
+    this.categoryForm.controls['categoryId'].setValue(category.id);
+    this.categoryForm.controls['nameEn'].setValue(category.nameEn);
+    this.categoryForm.controls['nameAr'].setValue(category.nameEn);
+    this.categoryForm.controls['avatar'].setValue(category.avatar);
   }
 
   deleteQr(Category){
@@ -220,5 +263,25 @@ export class MenuComponent implements OnInit {
         )
       }
     });
+  }
+
+
+  async uploadAttachment(file,controleName){
+    console.log('fileL: ',file);
+
+    let formData = new FormData(); 
+
+    formData.append("file",file[0]);
+
+    let request = {
+      method: "POST",
+      path: "file/upload",
+      body: formData
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    if (response.status == 200) {
+      this.categoryForm.get(controleName).setValue(response.data.url)
+    }
   }
 }

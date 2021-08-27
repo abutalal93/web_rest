@@ -13,16 +13,19 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <input type="text" [formControl]="loginForm.controls['username']" class="form-control" placeholder="Username">
-                    <div *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
-                      <div class="invalid-feedback"  *ngIf="loginForm.controls.username.errors.required">Username is required</div>
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid': loginForm.controls.username.invalid && loginForm.controls.username.dirty}" [formControl]="loginForm.controls['username']" class="form-control" placeholder="Username">
+                    <div class="invalid-feedback" *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
+                      <div *ngIf="loginForm.controls.username.errors.required">Username required</div>
                     </div>
                   </div>
                   <div class="input-group mb-4">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-lock"></i></span>
                     </div>
-                    <input type="password" [formControl]="loginForm.controls['password']" class="form-control" placeholder="Password">
+                    <input type="password" [ngClass]="{'is-invalid': loginForm.controls.password.invalid && loginForm.controls.password.dirty}" [formControl]="loginForm.controls['password']" class="form-control" placeholder="Password">
+                    <div class="invalid-feedback" *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
+                      <div *ngIf="loginForm.controls.password.errors.required">Password required</div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-6">

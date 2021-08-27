@@ -59,6 +59,47 @@ export class HttpService {
 
   }
 
+  async httpFile(request_options:any): Promise<any>{
+
+    let headers: Headers = new Headers();
+
+    headers.set('Content-Type','multipart/form-data');
+    headers.set('Accept', "multipart/form-data");
+  
+    this.options.headers = headers;
+    this.options.method = request_options.method;
+    if(request_options.body){
+      this.options.body = request_options.body;
+    }
+    if(request_options.prefix){
+      this.prefix = request_options.prefix;
+    }
+    this.path = request_options.path ;
+    let http_response = await this.http.request(this.apiUrl + this.prefix + this.path,  this.options)
+    .toPromise()
+    .then(response => response.json())
+    .catch((err: any) => {
+      let response: any;
+      switch(err.status){
+        case 401:
+          response = err.json();
+          this.authService.logoutUser();
+          break;
+        case 500:
+          response = { status: err.status , message_key: err.statusText}
+          break;
+        default:
+          response = err.json();
+          break;
+        }
+
+      return response;
+    });
+
+    return http_response;
+
+
+  }
 
   async refreshToken(): Promise<any>{
 
