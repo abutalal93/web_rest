@@ -53,6 +53,7 @@ import { NotifyService } from './views/services/notify.service';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CustomerComponent } from './views/customer/customer.component';
+import { CustomValidationService } from './views/services/custom-validation-service.service';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { CustomerComponent } from './views/customer/customer.component';
     IconSetService,
     CookieService,
     HttpService,
-    NotifyService
+    NotifyService,
+    CustomValidationService
   ],
   bootstrap: [ AppComponent ]
 })

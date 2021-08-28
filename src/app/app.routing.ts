@@ -68,6 +68,10 @@ export const routes: Routes = [
       {
         path: 'qrs',
         loadChildren: () => import('./views/qrs/qrs.module').then(m => m.QrsModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
       }
     ]
   },
