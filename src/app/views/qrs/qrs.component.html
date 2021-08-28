@@ -6,7 +6,7 @@
           <i class="fa fa-align-justify"></i> QR List
         </div>
         <div class="col-md-2 float-right card-right-button">
-          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Add QR</button>
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; editMode = false;">Add QR</button>
         </div>
       </div>
     </div>
@@ -14,8 +14,8 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Alias</th>
             <th>Code</th>
+            <th>Alias</th>
             <th>Create Date</th>
             <th>Status</th>
             <th>Actions</th>
@@ -65,7 +65,7 @@
 
 
 
-<div *ngIf="!showTable" [@fadeInOutTranslate] class="col-lg-12">
+<div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
   <form [formGroup]="qrForm" (ngSubmit)="save()">
     <div class="card">
       <div class="card-header">
@@ -74,7 +74,7 @@
             <h6>Add QR</h6>
           </div>
           <div class="col-md-2 float-right card-right-button">
-            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable">Back</button>
+            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.qrForm.reset();">Back</button>
           </div>
         </div>
       </div>
@@ -83,12 +83,15 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Alias</label>
-              <input type="text" class="form-control" [formControl]="qrForm.controls['alias']" id="alias" placeholder="Enter QR Alias">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': qrForm.controls.alias.invalid && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)}" [formControl]="qrForm.controls['alias']" id="alias" placeholder="Enter QR Alias">
+              <div class="invalid-feedback" *ngIf="qrForm.controls.alias.errors && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)">
+                <div *ngIf="qrForm.controls.alias.errors.required">Alias required</div>
+              </div>
             </div>
             <div class="form-group">
               <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="save()">Save</button>
               <button style="margin: 2px;" type="button" class="btn btn-success px-4"
-                (click)="showTable = !showTable">Cancel</button>
+                (click)="showTable = !showTable; this.itemForm.reset();">Cancel</button>
             </div>
           </div>
         </div>
@@ -98,5 +101,43 @@
       </div>
     </div>
   </form>
+</div>
 
+
+<div *ngIf="!showTable && editMode" [@fadeInOutTranslate] class="col-lg-12">
+  <form [formGroup]="qrForm" (ngSubmit)="save()">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Update QR</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.qrForm.reset();">Back</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Alias</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': qrForm.controls.alias.invalid && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)}" [formControl]="qrForm.controls['alias']" id="alias" placeholder="Enter QR Alias">
+              <div class="invalid-feedback" *ngIf="qrForm.controls.alias.errors && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)">
+                <div *ngIf="qrForm.controls.alias.errors.required">Alias required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="update()">Save</button>
+              <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+                (click)="showTable = !showTable; this.itemForm.reset();">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

@@ -23,6 +23,8 @@ export class QrsComponent implements OnInit {
   
   showTable = true;
 
+  editMode = false;
+
   qrForm: FormGroup;
 
   async ngOnInit() {
@@ -37,6 +39,7 @@ export class QrsComponent implements OnInit {
 
   loadForm() {
     this.qrForm = new FormGroup({
+      qrId: new FormControl(''),
       alias: new FormControl('', [Validators.required])
     });
   }
@@ -82,6 +85,11 @@ export class QrsComponent implements OnInit {
     console.log("+this.activePage+", this.activePage);
   }
 
+  markFormGroupToched(){
+    (<any>Object).values(this.qrForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
 
   async save(){
     this.httpService.markFormGroupTouched(this.qrForm);
@@ -113,13 +121,45 @@ export class QrsComponent implements OnInit {
     }
   }
 
+  async update(){
+    this.httpService.markFormGroupTouched(this.qrForm);
+
+    if (this.qrForm.valid) {
+
+      let request = {
+        method: "POST",
+        path: "rest/qr/update",
+        body: this.qrForm.value
+      };
+
+      let response = await this.httpService.httpRequest(request);
+      console.log(response);
+      if(response.status == 200){
+
+        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+      
+      
+        this.showTable=!this.showTable;
+
+        this.qrForm.reset();
+
+        await this.findQrs();
+
+      }else{
+        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+      }
+    }
+  }
+
 
   editQr(qr){
 
     this.showTable=!this.showTable;
 
-    this.qrForm.controls['alias'].setValue(qr.alias);
+    this.editMode = true;
 
+    this.qrForm.controls['alias'].setValue(qr.alias);
+    this.qrForm.controls['qrId'].setValue(qr.id);
   }
 
   deleteQr(qr){
