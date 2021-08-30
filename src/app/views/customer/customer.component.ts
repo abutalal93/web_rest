@@ -17,6 +17,8 @@ export class CustomerComponent implements OnInit {
   isLoaded = false;
 
 
+  currentItemList = [];
+
   constructor(private activatedRoute: ActivatedRoute, private cookieService: CookieService, private httpService: HttpService, private notifyService: NotifyService) { }
 
   async ngOnInit() {
@@ -48,7 +50,11 @@ export class CustomerComponent implements OnInit {
   }
 
   viewItem(category){
-    console.log
+    this.currentItemList = category.itemList
+  }
+
+  viewCategoty(){
+    this.currentItemList = [];
   }
 
 }
