@@ -6,11 +6,18 @@ import { CookieService } from 'ngx-cookie-service';
 @Injectable()
 export class AuthGuardService implements CanActivate, CanActivateChild {
 
+  //competition
+
     constructor(private authService: AuthService, private router: Router, private cookieService: CookieService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
        let url: string = state.url;
+
+       console.log('url: '+url);
+       if(url == '/customer' || url == '/competition'){
+        return true;
+       }
 
        this.authService.setLoginUrl('/login');
 

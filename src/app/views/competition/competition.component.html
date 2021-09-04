@@ -1,0 +1,293 @@
+<div  *ngIf="stepOne" style="font-family: 'Cairo', sans-serif;" class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <h1>أهلا بك عزيزي المسابق</h1>
+                  <p>اذا استطعت الوصول الى هذه الصفحة فانت بالتأكيد قد تمت دعوتك عن طريق صديق او
+                    دائرة مقربة من الاصدقاء للقيام بالتحدي الذي يبرز اذا ما كنت مصمم محترف ولديك القدرة والكفاءة لتصميم
+                    ماهو مميز.
+                    يمكنك الدخول و المحاولة، علما انه سيتم اختيار افضل تصميم ليفوز بجائزة نقدية (المعلومات بالداخل).</p>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password"
+                      [ngClass]="{'is-invalid': loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)}"
+                      [formControl]="loginForm.controls['password']" class="form-control" placeholder="الرقم السري">
+                    <div class="invalid-feedback"
+                      *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
+                      <div *ngIf="loginForm.controls.password.errors.required">كلمة المرور مطلوبة</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-primary px-4" (click)="login()">دخول</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div  *ngIf="stepTwo" style="font-family: 'Cairo', sans-serif;" class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <p>
+                    المطلوب :- تصميم شعار لشركة متخصصة بالاتصالات وتكنولوجيا المعلومات وانترنت الاشياء و التطبيقات
+                    والانظمة بشكل عام وانظمة التتبع العام بالاضافة الى تقديم الاستشارات بالمجالات السابقة
+                  </p>
+                  <p>
+                    كما وأن
+                    الانظمة وبعض التكنولوجيا التي سيتم تصديرها من الشركة قد تساهم في تقديم خدمات لكوكب الارض والانسانية
+                    بشكل عام من حيث تسهيل الاعمال وادارتها وتقليل الوقت المهدر الذي يؤدي الى توفير الطاقة
+                  </p>
+                  <p>
+                    كما وتساهم في
+                    زيادة الانتاجية وتقليل الاعتماد على الاوراق وتقليل التلوث والنفايات وبالتالي تقليل قطع الاشجار الذي
+                    يؤدي الى تقليل الاحتباس الحراري
+                  </p>
+
+                  <ul>
+                    <li>
+                      اسم الشركة: وجدتها للاتصالات وتكنولوجيا المعلومات
+                    </li>
+                    <li>
+                      اسم الشركة بالانجليزية: Wajdtuha
+                    </li>
+                  </ul>
+                  <div class="card-body">
+                    <table style="direction: ltr; width: 100%; text-align: center;">
+                      <tr>
+                        <td>
+                          W
+                        </td>
+                        <td>
+                          A
+                        </td>
+                        <td>
+                          J
+                        </td>
+                        <td>
+                          D
+                        </td>
+                        <td>
+                          T
+                        </td>
+                        <td>
+                          U
+                        </td>
+                        <td>
+                          H
+                        </td>
+                        <td>
+                          A
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-primary px-4" (click)="changeToStep(3)">التالي</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div  *ngIf="stepThree" style="font-family: 'Cairo', sans-serif;" class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="termForm" (ngSubmit)="acceptTerms()">
+                  <h1>الشروط والاحكام</h1>
+                  <ul>
+                    <li>
+                      ينتهي تقديم التصاميم بتاريخ 11\9\2021
+                    </li>
+                    <li>
+                      التصميم الفائز سيحصل على مبلغ 100 دينار اردني
+                    </li>
+                    <li>
+                      في حال اختيار التصميم الخاص بك ، فانه يجب عليك تسليم اصل التصميم لشركة وجدتها للاتصالات وتكنولوجيا
+                      المعلومات ويكون التصميم ملك للشركة
+                    </li>
+                    <li>
+                      يشترط في التصميم ان لا يكون منسوخ او مشابه لاي تصميم موجود في العالم وان يكون فريد من نوعه وغير
+                      مستنسخ من تصاميم موجوده وتكون المسئولية القانونية في حال تبين عكس ذلك على المصم نفسه حتى بعد
+                      استحواذ شركة وجدتها عليه.
+                    </li>
+                    <li>
+                      التصاميم بصيغة (JPG, GIF) وحجم الملف الواحد لا يزيد عن 1 ميجابايت.
+                    </li>
+                    <li>
+                      بعد الموافقة على الشروط و الاحكام والتسجيل سيتم ارسال كلمة سر لدخولك للموقع لرفع التصميم/التصاميم
+                    </li>
+                    <li>
+                      يتم تسليم المبلغ اما عن طريق الكاش باليد او حوالة بنكية.
+                    </li>
+                  </ul>
+                  <div class="col-md-9 col-form-label">
+                    <div class="form-check">
+                      <input [formControl]="termForm.controls['approve']" class="form-check-input" type="checkbox"
+                        value="YES" id="checkbox1">
+                      <label style="text-indent: 20px;" class="form-check-label" for="checkbox1">
+                        أوافق على الشروط واﻷحكام
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+
+                      <button type="button" class="btn btn-primary px-4" (click)="acceptTerms()">التالي</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<div  *ngIf="stepFour" style="font-family: 'Cairo', sans-serif;" class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="requestForm" (ngSubmit)="request()">
+                  <h1>معلومات الطلب</h1>
+                  <div class="input-group mb-3">
+                    <input type="text"
+                      [ngClass]="{'is-invalid': requestForm.controls.fullName.invalid && (requestForm.controls.fullName.dirty || requestForm.controls.fullName.touched)}"
+                      [formControl]="requestForm.controls['fullName']" class="form-control" placeholder="اﻹسم الرباعي">
+                    <div class="invalid-feedback"
+                      *ngIf="requestForm.controls.fullName.errors && (requestForm.controls.fullName.dirty || requestForm.controls.fullName.touched)">
+                      <div *ngIf="requestForm.controls.fullName.errors.required">اﻹسم الرباعي مطلوب</div>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <input type="text"
+                      [ngClass]="{'is-invalid': requestForm.controls.mobileNumber.invalid && (requestForm.controls.mobileNumber.dirty || requestForm.controls.mobileNumber.touched)}"
+                      [formControl]="requestForm.controls['mobileNumber']" class="form-control" placeholder="رقم الموبايل">
+                    <div class="invalid-feedback"
+                      *ngIf="requestForm.controls.mobileNumber.errors && (requestForm.controls.mobileNumber.dirty || requestForm.controls.mobileNumber.touched)">
+                      <div *ngIf="requestForm.controls.mobileNumber.errors.required">رقم الموبايل</div>
+                      <div *ngIf="requestForm.controls.mobileNumber.errors.pattern">رقم الموبايل غير صحيح</div>
+
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <input type="text"
+                      [ngClass]="{'is-invalid': requestForm.controls.email.invalid && (requestForm.controls.email.dirty || requestForm.controls.email.touched)}"
+                      [formControl]="requestForm.controls['email']" class="form-control" placeholder="البريد اﻹلكتروني">
+                    <div class="invalid-feedback"
+                      *ngIf="requestForm.controls.email.errors && (requestForm.controls.email.dirty || requestForm.controls.email.touched)">
+                      <div *ngIf="requestForm.controls.email.errors.required">البريد اﻹلكرتوني مطلوب</div>
+                      <div *ngIf="requestForm.controls.email.errors.email">البريد اﻹلكتروني غير صحيح</div>
+                    </div>
+                  </div>
+                  <div class="finput-group mb-3">
+                    <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'attachmentOne')" id="alias" placeholder="تصميم اﻷول">
+                    <div class="image-warning">
+                      <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
+                      <div *ngIf="this.requestForm.controls['attachmentOne'].value">الملف المرفوع: <a [href]="this.requestForm.controls['attachmentOne'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="finput-group mb-3">
+                    <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'attachmentTwo')" id="alias" placeholder="تصميم الثاني">
+                    <div class="image-warning">
+                      <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
+                      <div *ngIf="this.requestForm.controls['attachmentTwo'].value">الملف المرفوع: <a [href]="this.requestForm.controls['attachmentTwo'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="finput-group mb-3">
+                    <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'attachmentThree')" id="alias" placeholder="تصميم الثالث">
+                    <div class="image-warning">
+                      <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
+                      <div *ngIf="this.requestForm.controls['attachmentThree'].value">الملف المرفوع: <a [href]="this.requestForm.controls['attachmentThree'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="finput-group mb-3">
+                    <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'attachmentFour')" id="alias" placeholder="تصميم الرابع">
+                    <div class="image-warning">
+                      <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
+                      <div *ngIf="this.requestForm.controls['attachmentFour'].value">الملف المرفوع: <a [href]="this.requestForm.controls['attachmentFour'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="finput-group mb-3">
+                    <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'attachmentFive')" id="alias" placeholder="تصميم الخامس">
+                    <div class="image-warning">
+                      <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
+                      <div *ngIf="this.requestForm.controls['attachmentFive'].value">الملف المرفوع: <a [href]="this.requestForm.controls['attachmentFive'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-primary px-4" (click)="request()">تسجيل</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<div  *ngIf="stepFive" style="font-family: 'Cairo', sans-serif;" class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="termForm" (ngSubmit)="acceptTerms()">
+                  <h1>تهانينا</h1>
+                  <p>
+                    لقد تم تسجيل طلبك بنجاح
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

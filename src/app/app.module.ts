@@ -53,6 +53,7 @@ import { NotifyService } from './views/services/notify.service';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CustomerComponent } from './views/customer/customer.component';
+import { CompetitionComponent } from './views/competition/competition.component';
 import { CustomValidationService } from './views/services/custom-validation-service.service';
 
 @NgModule({
@@ -84,7 +85,8 @@ import { CustomValidationService } from './views/services/custom-validation-serv
     P500Component,
     LoginComponent,
     RegisterComponent,
-    CustomerComponent
+    CustomerComponent,
+    CompetitionComponent
   ],
   providers: [
     {
