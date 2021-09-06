@@ -96,15 +96,32 @@ export class CompetitionComponent implements OnInit {
     }
   }
 
-  request(){
+  request() {
     this.httpService.markFormGroupTouched(this.requestForm);
 
     if (this.requestForm.valid) {
-      this.changeToStep(5);
+
+      let request = {
+        method: "GET",
+        path: "notification/email?name="+this.requestForm.value.fullName+"&email="+this.requestForm.value.email,
+        body: null
+      };
+
+      let response = await this.httpService.httpRequest(request);
+      console.log(response);
+      if (response.status == 200) {
+
+        this.changeToStep(5);
+
+      } else {
+        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+      }
+      
     } else {
       this.notifyService.addToast({ title: "خطأ", msg: 'يرجى ارفاق تصميم واحد على اﻷقل', timeout: 10000, theme: '', position: 'top-center', type: 'error' });
     }
   }
+
 
 
   acceptTerms() {
