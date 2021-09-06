@@ -96,7 +96,7 @@ export class CompetitionComponent implements OnInit {
     }
   }
 
-  request() {
+  async request() {
     this.httpService.markFormGroupTouched(this.requestForm);
 
     if (this.requestForm.valid) {
