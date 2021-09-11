@@ -22,6 +22,11 @@ export const navItems: INavData[] = [
     icon: 'cil-qr-code'
   },
   {
+    name: 'Order Managment',
+    url: '/order',
+    icon: 'cil-cart'
+  },
+  {
     name: 'Users',
     url: '/users',
     icon: 'cil-user'

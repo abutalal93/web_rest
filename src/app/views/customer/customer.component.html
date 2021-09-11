@@ -1,66 +1,175 @@
-<div style="background-color: white;" *ngIf="isLoaded">
-  <div class="row">
-    <div class="col-sm-12 col-md-12" style="text-align: center;">
-      <img [src]="qrInfo.logo" style="width: 150px;" alt="rest Logo" />
+<form [formGroup]="orderForm" (ngSubmit)="login()">
+  <div style="background-color: white;" *ngIf="isLoaded">
+    <div class="row">
+      <div class="col-sm-12 col-md-12" style="text-align: center;">
+        <img [src]="qrInfo.logo" style="width: 150px;" alt="rest Logo" />
+      </div>
     </div>
-  </div>
-  <div class="row" *ngIf="qrInfo.categoryList && qrInfo.categoryList.length > 0 && currentItemList.length == 0">
-    <div class="col-sm-4" *ngFor="let category of qrInfo.categoryList">
-      <div class="product-card">
-        <div class="card  z-depth-4">
-          <div class="card-image">
-            <img
-              [src]="category.avatar ? category.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"
-              alt="product-img">
-          </div>
-          <div class="card-content">
-            <div class="row">
-              <div class="col s12">
-                <strong>{{ category.nameEn}}</strong>
+    <div class="row">
+      <div *ngIf="cart.length > 0" class="col-sm-12 col-md-12" style="text-align: center;">
+        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = true">Order Now ( {{ cart.length
+          }}
+          )</button>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="showCart" class="col-sm-12 col-md-12" style="text-align: center;">
+        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = !showCart">Back</button>
+      </div>
+    </div>
+    <div *ngIf="!showCart">
+      <div class="row" *ngIf="qrInfo.categoryList && qrInfo.categoryList.length > 0 && currentItemList.length == 0">
+        <div class="col-sm-4" *ngFor="let category of qrInfo.categoryList">
+          <div class="product-card">
+            <div class="card  z-depth-4">
+              <div class="card-image">
+                <img class="product-image"
+                  [src]="category.avatar ? category.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"
+                  alt="product-img">
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <div class="col s12">
+                    <strong>{{ category.name}}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="viewItem(category)">View Item</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col s12">
-                <button type="button" class="btn btn-sm btn-primary" (click)="viewItem(category)">View Item</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentItemList.length > 0">
+        <div class="col-sm-4" style="text-align: center;">
+          <button type="button" class="btn btn-sm btn-danger" (click)="viewCategoty()">Back</button>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentItemList.length > 0">
+        <div class="col-sm-4" *ngFor="let item of currentItemList">
+          <div class="product-card">
+            <div class="card  z-depth-4">
+              <div class="card-image">
+                <a class="btn-floating btn-large price waves-effect waves-light brown darken-3" style="color: white;">{{
+                  item.email}}
+                  JD</a>
+                <img class="product-image"
+                  [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"
+                  alt="product-img">
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <div class="col s12">
+                    <strong>{{ item.name}}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <p>
+                      {{ item.description}}
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="quantity buttons_added">
+                      <input type="button" value="-" class="minus" (click)="minus(item)">
+                      <input type="number" name="quantity" value="{{ item.quantity }}" title="Qty"
+                        class="input-text qty text" size="4" pattern="" inputmode="">
+                      <input type="button" value="+" class="plus" (click)="plus(item)">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <button type="button" [disabled]="item.quantity == 0" class="btn btn-sm btn-primary"
+                      (click)="addToCart(item)">Add to cart</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row" *ngIf="currentItemList.length > 0">
-    <div class="col-sm-4" style="text-align: center;">
-      <button type="button" class="btn btn-sm btn-danger" (click)="viewCategoty()">Back</button>
-    </div>
-  </div>
-  <div class="row" *ngIf="currentItemList.length > 0">
-    <div class="col-sm-4" *ngFor="let item of currentItemList">
-      <div class="product-card">
-        <div class="card  z-depth-4">
-          <div class="card-image">
-            <a href="#" class="btn-floating btn-large price waves-effect waves-light brown darken-3">{{ item.unitPrice}}
-              JD</a>
-            <img
-              [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"
-              alt="product-img">
+    <div *ngIf="showCart">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quintity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="cart.length === 0">
+            <td style="text-align: center;color: red" colspan="5">
+              "No data found"
+            </td>
+          </tr>
+          <tr *ngFor="let item of cart">
+            <td> {{ item.name }}</td>
+            <td> {{ item.quantity }}</td>
+            <td> {{ item.email }}</td>
+            <td> {{ (item.email * item.quantity) }}</td>
+            <td>
+              <button (click)='deleteItemFromCart(item)' type="button" class="btn btn-ghost-danger"><i
+                  class="cil-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              Total Order Amount
+            </td>
+            <td>
+              {{ findOrderTotal() }} JD
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.name.invalid && (orderForm.controls.name.dirty || orderForm.controls.name.touched)}" [formControl]="orderForm.controls['name']" id="alias" placeholder="Enter Your Name">
+            <div class="invalid-feedback" *ngIf="orderForm.controls.name.errors && (orderForm.controls.name.dirty || orderForm.controls.name.touched)">
+              <!-- <div *ngIf="orderForm.controls.name.errors.required">Name required</div> -->
+            </div>       
           </div>
-          <div class="card-content">
-            <div class="row">
-              <div class="col s12">
-                <strong>{{ item.nameEn}}</strong>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <p>
-                  {{ item.description}}
-                </p>
-              </div>
-            </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Mobile</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.mobile.invalid && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)}" [formControl]="orderForm.controls['mobile']" id="alias" placeholder="Enter Your Mobile">
+            <div class="invalid-feedback" *ngIf="orderForm.controls.mobile.errors && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)">
+              <div *ngIf="orderForm.controls.email.errors.pattern">Mobile invalid</div>
+            </div>     
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Email</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.email.invalid && (orderForm.controls.email.dirty || orderForm.controls.email.touched)}" [formControl]="orderForm.controls['email']" id="alias" placeholder="Enter Your Email">
+            <div class="invalid-feedback" *ngIf="orderForm.controls.email.errors && (orderForm.controls.email.dirty || orderForm.controls.email.touched)">
+              <div *ngIf="orderForm.controls.email.errors.email">Email invalid</div>
+            </div>  
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Order</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>

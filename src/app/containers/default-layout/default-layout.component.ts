@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import { AuthService } from '../../views/services/auth-service.service';
 import { HttpService } from '../../views/services/http.service';
 import { navItems } from '../../_nav';
+import { waitressItems } from '../../_waitress';
+
 
 @Component({
   selector: 'app-dashboard',

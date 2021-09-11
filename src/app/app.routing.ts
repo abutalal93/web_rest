@@ -78,6 +78,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/qrs/qrs.module').then(m => m.QrsModule)
       },
       {
+        path: 'order',
+        loadChildren: () => import('./views/order/order.module').then(m => m.OrderModule)
+      },
+      {
         path: 'users',
         loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
       }
