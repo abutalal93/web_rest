@@ -20,7 +20,14 @@ export class OrderComponent implements OnInit {
 
   orderList = [];
 
-  orderInfo = {};
+  orderInfo = {
+    totalAmount: null,
+    email: null,
+    mobileNumber: null,
+    customerName: null,
+    trackList: null,
+    itemList: null
+  };
 
   page = 0;
   activePage = 1;
