@@ -7,10 +7,10 @@ import Swal from 'sweetalert2'
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
-  templateUrl: 'order.component.html',
+  templateUrl: 'order-history.component.html',
   animations: [fadeInOutTranslate]
 })
-export class OrderComponent implements OnInit {
+export class OrderHistoryComponent implements OnInit {
 
 
   categoryList = [];
@@ -19,6 +19,10 @@ export class OrderComponent implements OnInit {
 
 
   orderList = [];
+
+  reference = '';
+  dateFrom = '';
+  dateTo = '';
 
   orderInfo = {};
 
@@ -34,7 +38,7 @@ export class OrderComponent implements OnInit {
 
   async ngOnInit() {
     this.loadForm();
-    await this.findorder();
+    await this.findOrderHistory();
   }
 
   constructor(private httpService: HttpService, private notifyService: NotifyService) {
@@ -46,7 +50,7 @@ export class OrderComponent implements OnInit {
 
   }
 
-  async findorder() {
+  async findOrderHistory() {
 
     if (!this.fromNext) {
       this.activePage = 1;
@@ -54,7 +58,7 @@ export class OrderComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/order/search",
+      path: "rest/order/history?reference="+this.reference+"&dateFrom="+this.dateFrom+"&dateTo"+this.dateTo,
       body: null
     };
 
@@ -83,64 +87,15 @@ export class OrderComponent implements OnInit {
   async onSelect(page) {
     this.activePage = page.pageName;
     this.fromNext = true;
-    await this.findorder();
+    await this.findOrderHistory();
     console.log("+this.activePage+", this.activePage);
   }
 
-  cancel(order){
+  pay(OrderHistory){
 
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You want to cancel order!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, cancel it!',
-      cancelButtonText: 'No, keep it',
-      showLoaderOnConfirm: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        return new Promise(async (resolve) => {
-          let request = {
-            method: "PUT",
-            path: "rest/order/cancel?orderId="+order.id,
-            body: null
-          };
-    
-          let response = await this.httpService.httpRequest(request);
-          console.log(response);
-          if(response.status == 200){
-    
-            Swal.fire(
-              'Changed!',
-              'Your order has been canceled.',
-              'success'
-            )
-            await this.findorder();
-    
-          }else{
-            Swal.fire(
-              'Error!',
-              'Error ocurred please try again.',
-              'error'
-            )
-          }
-
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'Your order is safe :)',
-          'error'
-        )
-      }
-    });
-  }
-
-  pay(order){
-
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You want to pay order!',
+      text: 'You want to pay OrderHistory!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, pay it!',
@@ -151,7 +106,7 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/pay?orderId="+order.id,
+            path: "rest/OrderHistory/pay?OrderHistoryId="+OrderHistory.id,
             body: null
           };
     
@@ -161,10 +116,10 @@ export class OrderComponent implements OnInit {
     
             Swal.fire(
               'Changed!',
-              'Your order has been paid.',
+              'Your OrderHistory has been paid.',
               'success'
             )
-            await this.findorder();
+            await this.findOrderHistory();
     
           }else{
             Swal.fire(
@@ -178,18 +133,18 @@ export class OrderComponent implements OnInit {
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
-          'Your order is safe :)',
+          'Your OrderHistory is safe :)',
           'error'
         )
       }
     });
   }
 
-  approve(order){
+  approve(OrderHistory){
 
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You want to approve order!',
+      text: 'You want to approve OrderHistory!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, change it!',
@@ -200,7 +155,7 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/approve?orderId="+order.id,
+            path: "rest/OrderHistory/approve?OrderHistoryId="+OrderHistory.id,
             body: null
           };
     
@@ -210,10 +165,10 @@ export class OrderComponent implements OnInit {
     
             Swal.fire(
               'Changed!',
-              'Your order has been approved.',
+              'Your OrderHistory has been approved.',
               'success'
             )
-            await this.findorder();
+            await this.findOrderHistory();
     
           }else{
             Swal.fire(
@@ -227,18 +182,18 @@ export class OrderComponent implements OnInit {
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
-          'Your order is safe :)',
+          'Your OrderHistory is safe :)',
           'error'
         )
       }
     });
   }
 
-  deliver(order){
+  deliver(OrderHistory){
 
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You want to deliver order!',
+      text: 'You want to deliver OrderHistory!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, deliver it!',
@@ -249,7 +204,7 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/deliver?orderId="+order.id,
+            path: "rest/OrderHistory/deliver?OrderHistoryId="+OrderHistory.id,
             body: null
           };
     
@@ -259,10 +214,10 @@ export class OrderComponent implements OnInit {
     
             Swal.fire(
               'Changed!',
-              'Your order has been delivered.',
+              'Your OrderHistory has been delivered.',
               'success'
             )
-            await this.findorder();
+            await this.findOrderHistory();
     
           }else{
             Swal.fire(
@@ -276,7 +231,7 @@ export class OrderComponent implements OnInit {
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
-          'Your order is safe :)',
+          'Your OrderHistory is safe :)',
           'error'
         )
       }
@@ -284,11 +239,11 @@ export class OrderComponent implements OnInit {
   }
 
 
-  async viewItem(order){
+  async viewTrack(OrderHistory){
 
     let request = {
       method: "GET",
-      path: "rest/order/timeline?orderId="+order.id,
+      path: "rest/order/timeline?orderId="+OrderHistory.id,
       body: null
     };
 

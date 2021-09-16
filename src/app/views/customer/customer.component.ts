@@ -24,6 +24,12 @@ export class CustomerComponent implements OnInit {
 
   currentItemList = [];
 
+  showRunningOrder = false;
+
+  orderList = [];
+
+  showMenu = true;
+
   constructor(private activatedRoute: ActivatedRoute, private cookieService: CookieService, private httpService: HttpService, private notifyService: NotifyService) { }
 
   async ngOnInit() {
@@ -56,6 +62,13 @@ export class CustomerComponent implements OnInit {
       });
 
       console.log('this.qrInfo: ',this.qrInfo);
+
+      if(this.qrInfo.orderList && this.qrInfo.orderList.length > 0){
+        this.orderList = this.qrInfo.orderList;
+        this.showRunningOrder = true;
+        this.showCart = false;
+        this.showMenu = false;
+      }
 
     }else{
       this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
@@ -130,14 +143,20 @@ export class CustomerComponent implements OnInit {
         body: this.orderForm.value
       };
 
+      let qrId = this.activatedRoute.snapshot.queryParamMap.get('qrId');
+
       request.body.cartList = this.cart;
+      request.body.qrId = qrId;
+      request.body.totalAmount = this.findOrderTotal();
 
       let response = await this.httpService.httpRequest(request);
       console.log(response);
       if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+        this.notifyService.addToast({ title: "Success", msg: "Order Created Successfully: "+response.data, timeout: 10000, theme: '', position: 'top-center', type: 'success' });
     
+        await this.ngOnInit();
+        
         this.cart = [];
 
         this.orderForm.reset();

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://wjadtoha.com/',
+  apiUrl: 'http://localhost:8080/',
   prefix: 'core/',
 };

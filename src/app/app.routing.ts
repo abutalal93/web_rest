@@ -84,6 +84,14 @@ export const routes: Routes = [
       {
         path: 'users',
         loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'setting',
+        loadChildren: () => import('./views/setting/setting.module').then(m => m.SettingModule)
+      },
+      {
+        path: 'order-history',
+        loadChildren: () => import('./views/order-history/order-history.module').then(m => m.OrderHistoryModule)
       }
     ]
   },

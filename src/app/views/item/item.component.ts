@@ -73,7 +73,8 @@ export class ItemComponent implements OnInit {
       unitPrice: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
       avatar: new FormControl(''),
       categoryId: new FormControl('', [Validators.required]),
-      description: new FormControl(null,)
+      description: new FormControl(null,),
+      deactivationDate: new FormControl(''),
     });
   }
 
@@ -141,7 +142,7 @@ export class ItemComponent implements OnInit {
       console.log(response);
       if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+        this.notifyService.addToast({ title: "Success", msg: "Item Added Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
       
       
         this.showTable=!this.showTable;
@@ -173,7 +174,7 @@ export class ItemComponent implements OnInit {
       console.log(response);
       if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+        this.notifyService.addToast({ title: "Success", msg: "Item Updated Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
       
       
         this.showTable=!this.showTable;
@@ -202,13 +203,14 @@ export class ItemComponent implements OnInit {
     this.itemForm.controls['avatar'].setValue(item.avatar);
     this.itemForm.controls['unitPrice'].setValue(item.unitPrice);
     this.itemForm.controls['description'].setValue(item.description);
+    this.itemForm.controls['deactivationDate'].setValue(item.deactivationDate);
   }
 
   deleteItem(Item){
 
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You want to delete Item code!',
+      text: 'You want to delete Item!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',

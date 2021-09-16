@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label  class="required"for="ccmonth">Category</label>
               <select [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}" [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
@@ -123,7 +123,13 @@
               </div> 
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="date-input">Deactivation Date</label>
+              <input class="form-control" [formControl]="categoryForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
+            </div>
+          </div>
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Avatar</label>
               <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')" id="alias" placeholder="Upload item Image">
@@ -202,7 +208,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label  class="required"for="ccmonth">Category</label>
               <select [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}" [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
@@ -213,7 +219,13 @@
               </div> 
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="date-input">Deactivation Date</label>
+              <input class="form-control" [formControl]="itemForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
+            </div>
+          </div>
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Avatar</label>
               <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')" id="alias" placeholder="Upload item Image">

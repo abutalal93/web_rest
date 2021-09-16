@@ -71,7 +71,7 @@
       <div class="card-header">
         <div class="row">
           <div class="col-md-10">
-            <h6>Add Category</h6>
+            <h6>Add Item Category</h6>
           </div>
           <div class="col-md-2 float-right card-right-button">
             <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.categoryForm.reset();">Back</button>
@@ -96,6 +96,12 @@
               <div class="invalid-feedback" *ngIf="categoryForm.controls.nameAr.errors && (categoryForm.controls.nameAr.dirty || categoryForm.controls.nameAr.touched)">
                 <div *ngIf="categoryForm.controls.nameAr.errors.required">Name in arabic required</div>
               </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="date-input">Deactivation Date</label>
+              <input class="form-control" [formControl]="categoryForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
             </div>
           </div>
           <div class="col-sm-3"> 
@@ -156,6 +162,12 @@
               <div class="invalid-feedback" *ngIf="categoryForm.controls.nameAr.errors && (categoryForm.controls.nameAr.dirty || categoryForm.controls.nameAr.touched)">
                 <div *ngIf="categoryForm.controls.nameAr.errors.required">Name in arabic required</div>
               </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="date-input">Deactivation Date</label>
+              <input class="form-control" [formControl]="categoryForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
             </div>
           </div>
           <div class="col-sm-3"> 

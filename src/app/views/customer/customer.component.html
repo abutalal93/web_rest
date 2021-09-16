@@ -13,11 +13,11 @@
       </div>
     </div>
     <div class="row">
-      <div *ngIf="showCart" class="col-sm-12 col-md-12" style="text-align: center;">
+      <div *ngIf="showCart && !showMenu" class="col-sm-12 col-md-12" style="text-align: center;">
         <button type="button" class="btn btn-sm btn-primary" (click)="showCart = !showCart">Back</button>
       </div>
     </div>
-    <div *ngIf="!showCart">
+    <div *ngIf="!showCart && showMenu">
       <div class="row" *ngIf="qrInfo.categoryList && qrInfo.categoryList.length > 0 && currentItemList.length == 0">
         <div class="col-sm-4" *ngFor="let category of qrInfo.categoryList">
           <div class="product-card">
@@ -135,31 +135,44 @@
         </tfoot>
       </table>
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.name.invalid && (orderForm.controls.name.dirty || orderForm.controls.name.touched)}" [formControl]="orderForm.controls['name']" id="alias" placeholder="Enter Your Name">
-            <div class="invalid-feedback" *ngIf="orderForm.controls.name.errors && (orderForm.controls.name.dirty || orderForm.controls.name.touched)">
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': orderForm.controls.name.invalid && (orderForm.controls.name.dirty || orderForm.controls.name.touched)}"
+              [formControl]="orderForm.controls['name']" id="alias" placeholder="Enter Your Name">
+            <div class="invalid-feedback"
+              *ngIf="orderForm.controls.name.errors && (orderForm.controls.name.dirty || orderForm.controls.name.touched)">
               <!-- <div *ngIf="orderForm.controls.name.errors.required">Name required</div> -->
-            </div>       
+            </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label for="name">Mobile</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.mobile.invalid && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)}" [formControl]="orderForm.controls['mobile']" id="alias" placeholder="Enter Your Mobile">
-            <div class="invalid-feedback" *ngIf="orderForm.controls.mobile.errors && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)">
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': orderForm.controls.mobile.invalid && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)}"
+              [formControl]="orderForm.controls['mobile']" id="alias" placeholder="Enter Your Mobile">
+            <div class="invalid-feedback"
+              *ngIf="orderForm.controls.mobile.errors && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)">
               <div *ngIf="orderForm.controls.email.errors.pattern">Mobile invalid</div>
-            </div>     
+            </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label for="name">Email</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': orderForm.controls.email.invalid && (orderForm.controls.email.dirty || orderForm.controls.email.touched)}" [formControl]="orderForm.controls['email']" id="alias" placeholder="Enter Your Email">
-            <div class="invalid-feedback" *ngIf="orderForm.controls.email.errors && (orderForm.controls.email.dirty || orderForm.controls.email.touched)">
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': orderForm.controls.email.invalid && (orderForm.controls.email.dirty || orderForm.controls.email.touched)}"
+              [formControl]="orderForm.controls['email']" id="alias" placeholder="Enter Your Email">
+            <div class="invalid-feedback"
+              *ngIf="orderForm.controls.email.errors && (orderForm.controls.email.dirty || orderForm.controls.email.touched)">
               <div *ngIf="orderForm.controls.email.errors.email">Email invalid</div>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
@@ -170,6 +183,38 @@
           </div>
         </div>
       </div>
+    </div>
+    <div *ngIf="showRunningOrder">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Date</th>
+            <th>Total Amount</th>
+            <th>QR Alias</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="orderList.length === 0">
+            <td style="text-align: center;color: red" colspan="5">
+              "No data found"
+            </td>
+          </tr>
+          <tr *ngFor="let order of orderList">
+            <td> {{ order.reference }}</td>
+            <td> {{ order.createDate | date:'short'}}</td>
+            <td> {{ order.totalAmount }} JD</td>
+            <td> {{ order.qrAlias }}</td>
+            <td>
+              <span *ngIf="order.status == 'INIT'" class="badge badge-success">Pending</span>
+              <span *ngIf="order.status == 'APPROVED'" class="badge badge-success">In Progress</span>
+              <span *ngIf="order.status == 'DELIVERED'" class="badge badge-success">Delivered</span>
+              <span *ngIf="order.status == 'PAID'" class="badge badge-success">Paid</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </form>

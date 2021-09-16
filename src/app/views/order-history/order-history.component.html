@@ -8,6 +8,31 @@
       </div>
     </div>
     <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Reference</label>
+            <input type="text" class="form-control"  [(ngModel)]="reference"  id="alias" placeholder="Reference">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Date From</label>
+            <input type="date" class="form-control" [(ngModel)]="dateFrom" id="alias" placeholder="Date From">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Date To</label>
+            <input type="date" class="form-control" [(ngModel)]="dateTo" id="alias" placeholder="Date To">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-sm btn-primary" (click)="findOrderHistory()">Search</button>
+          </div>
+        </div>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -33,17 +58,11 @@
             <td> {{ order.totalAmount }} JD</td>
             <td> {{ order.qrAlias }}</td>
             <td>
-              <span *ngIf="order.status == 'INIT'" class="badge badge-success">Pending</span>
-              <span *ngIf="order.status == 'PAID'" class="badge badge-danger">Paid</span>
-              <span *ngIf="order.status == 'DELIVERED'" class="badge badge-warning">Delivered</span>
-              <span *ngIf="order.status == 'APPROVED'" class="badge badge-success">In Progress</span>
+              <span *ngIf="order.status == 'CANCELED'" class="badge badge-danger">Canceled</span>
+              <span *ngIf="order.status == 'CLOSED'" class="badge badge-success">Closed</span>
             </td>
             <td>
-              <button (click)='view(order)' type="button" (click)="viewItem(order)" class="btn btn-ghost-primary">View Item</button>
-              <button *ngIf="order.status == 'INIT'" (click)='approve(order)' type="button" class="btn btn-ghost-success">Approve</button>
-              <button *ngIf="order.status != 'INIT' && order.status != 'PAID'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Pay</button>
-              <button *ngIf="order.status != 'INIT' && order.status != 'DELIVERED'" (click)='deliver(order)' type="button" class="btn btn-ghost-success">Deliver</button>
-              <button *ngIf="order.status == 'INIT'" (click)='cancel(order)' type="button" class="btn btn-ghost-danger">Cancel</button>
+              <button (click)='view(order)' type="button" (click)="viewTrack(order)" class="btn btn-ghost-primary">Timeline</button>
             </td>
           </tr>
         </tbody>
@@ -81,58 +100,26 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="name">Customer Name</label>
-              <input type="text" class="form-control" disabled value="{{ orderInfo.customerName }}" id="alias" placeholder="Nothing ..">
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="name">Customer Email</label>
-              <input type="text" class="form-control" disabled value="{{ orderInfo.email }}" id="alias" placeholder="Nothing ..">
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="name">Customer Mobile</label>
-              <input type="text" class="form-control" disabled value="{{ orderInfo.mobileNumber }}" id="alias" placeholder="Nothing ..">
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Total</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>User</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngIf="orderInfo.itemList && orderInfo.itemList.length === 0">
+              <tr *ngIf="orderInfo.trackList && orderInfo.trackList.length === 0">
                 <td style="text-align: center;color: red" colspan="4">
                   "No data found"
                 </td>
               </tr>
-              <tr *ngFor="let item of orderInfo.itemList">
-                <td> {{ item.item.nameEn }}</td>
-                <td> {{ item.quantity }}</td>
-                <td> {{ item.unitPrice }}</td>
-                <td> {{ (item.unitPrice * item.quantity) }}</td>
+              <tr *ngFor="let item of orderInfo.trackList">
+                <td> {{ item.createDate | date:'short'}}</td>
+                <td> {{ item.status }}</td>
+                <td> {{ item.userReference }}</td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3">
-                  Total Order Amount
-                </td>
-                <td>
-                  {{ orderInfo.totalAmount }} JD
-                </td>
-              </tr>
-            </tfoot>
           </table>
         </div>
       </div>

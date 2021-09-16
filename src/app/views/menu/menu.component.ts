@@ -42,6 +42,7 @@ export class MenuComponent implements OnInit {
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
       avatar: new FormControl(''),
+      deactivationDate: new FormControl(''),
     });
   }
 
@@ -108,7 +109,7 @@ export class MenuComponent implements OnInit {
       console.log(response);
       if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+        this.notifyService.addToast({ title: "Success", msg: "Category Added Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
       
       
         this.showTable=!this.showTable;
@@ -139,7 +140,7 @@ export class MenuComponent implements OnInit {
       console.log(response);
       if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+        this.notifyService.addToast({ title: "Success", msg: "Category Updated Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
       
       
         this.showTable=!this.showTable;
@@ -163,8 +164,9 @@ export class MenuComponent implements OnInit {
 
     this.categoryForm.controls['categoryId'].setValue(category.id);
     this.categoryForm.controls['nameEn'].setValue(category.nameEn);
-    this.categoryForm.controls['nameAr'].setValue(category.nameEn);
+    this.categoryForm.controls['nameAr'].setValue(category.nameAr);
     this.categoryForm.controls['avatar'].setValue(category.avatar);
+    this.categoryForm.controls['deactivationDate'].setValue(category.deactivationDate);
   }
 
   deleteQr(Category){
