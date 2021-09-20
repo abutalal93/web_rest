@@ -117,10 +117,6 @@
             <td> {{ item.unitPrice }}</td>
             <td> ({{ item.tax }}) {{ ((item.unitPrice * item.quantity) * item.tax).toFixed(2) }}</td>
             <td> {{ (((item.unitPrice * item.tax) + item.unitPrice) * item.quantity).toFixed(2) }}</td>
-            <td>
-              <button (click)='deleteItemFromCart(item)' type="button" class="btn btn-ghost-danger"><i
-                  class="cil-trash"></i></button>
-            </td>
           </tr>
         </tbody>
         <tfoot>
