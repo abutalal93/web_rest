@@ -42,7 +42,7 @@
               <button (click)='view(order)' type="button" (click)="viewItem(order)" class="btn btn-ghost-primary">View Item</button>
               <button *ngIf="order.status == 'INIT'" (click)='approve(order)' type="button" class="btn btn-ghost-success">Approve</button>
               <button *ngIf="order.status != 'INIT' && order.status != 'PAID'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Pay</button>
-              <button *ngIf="order.status != 'INIT' && order.status != 'PAY_REQUEST'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Approve Payment</button>
+              <button *ngIf="order.status != 'INIT' && order.status == 'PAY_REQUEST'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Approve Payment</button>
               <button *ngIf="order.status != 'INIT' && order.status != 'DELIVERED'" (click)='deliver(order)' type="button" class="btn btn-ghost-success">Deliver</button>
               <button *ngIf="order.status == 'INIT'" (click)='cancel(order)' type="button" class="btn btn-ghost-danger">Cancel</button>
             </td>
