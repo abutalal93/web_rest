@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fadeInOutTranslate } from '../animations/animation';
 import { HttpService } from '../services/http.service';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 })
 export class QrsComponent implements OnInit {
 
-
+  @ViewChild('qrCode', {static : false}) qrCode:any;
 
   qrsList = [];
 

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
+import { map } from 'rxjs/operators';
+import { io, Socket } from 'socket.io-client';
 
 @Component({
   selector: 'app-customer',
@@ -30,7 +32,15 @@ export class CustomerComponent implements OnInit {
 
   showMenu = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private cookieService: CookieService, private httpService: HttpService, private notifyService: NotifyService) { }
+  private socket: Socket;
+
+
+  constructor(private activatedRoute: ActivatedRoute,
+    private cookieService: CookieService,
+    private httpService: HttpService,
+    private notifyService: NotifyService) {
+
+  }
 
   async ngOnInit() {
 
@@ -38,11 +48,11 @@ export class CustomerComponent implements OnInit {
 
     let qrId = this.activatedRoute.snapshot.queryParamMap.get('qrId');
 
-    console.log("QR ID "+qrId);
+    console.log("QR ID " + qrId);
 
     let request = {
       method: "GET",
-      path: "customer/qr/info?qrId="+qrId,
+      path: "customer/qr/info?qrId=" + qrId,
       body: null
     };
 
@@ -51,26 +61,26 @@ export class CustomerComponent implements OnInit {
 
     console.log(response);
 
-    if(response.status == 200){
+    if (response.status == 200) {
 
       this.isLoaded = true;
 
       this.qrInfo = response.data;
 
       this.qrInfo.categoryList.forEach(category => {
-        category.itemList.map(v => Object.assign(v, {quantity: 0}))
+        category.itemList.map(v => Object.assign(v, { quantity: 1 }))
       });
 
-      console.log('this.qrInfo: ',this.qrInfo);
+      console.log('this.qrInfo: ', this.qrInfo);
 
-      if(this.qrInfo.orderList && this.qrInfo.orderList.length > 0){
+      if (this.qrInfo.orderList && this.qrInfo.orderList.length > 0) {
         this.orderList = this.qrInfo.orderList;
         this.showRunningOrder = true;
         this.showCart = false;
         this.showMenu = false;
       }
 
-    }else{
+    } else {
       this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
     }
   }
@@ -84,45 +94,45 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  viewItem(category){
+  viewItem(category) {
     this.currentItemList = category.itemList
   }
 
-  viewCategoty(){
+  viewCategoty() {
     this.currentItemList = [];
   }
 
 
-  plus(item){
+  plus(item) {
     item.quantity = item.quantity + 1;
   }
 
-  minus(item){
-    if(item.quantity == 0){
+  minus(item) {
+    if (item.quantity == 0) {
       return;
     }
     item.quantity = item.quantity - 1;
   }
 
 
-  addToCart(item){
+  addToCart(item) {
     let sectionIndex = this.cart.findIndex(currentItem => currentItem.id === item.id);
-    if(sectionIndex == -1){
+    if (sectionIndex == -1) {
       this.cart.push(item);
-    }else{
+    } else {
       this.cart[sectionIndex].quantity = item.quantity;
     }
 
-    console.log('this.cart: ',this.cart)
+    console.log('this.cart: ', this.cart)
   }
 
 
-  deleteItemFromCart(item){
+  deleteItemFromCart(item) {
     this.cart = this.cart.filter(currentItem => currentItem.id !== item.id);
   }
 
 
-  findOrderTotal(){
+  findOrderBeforeTax() {
 
     let total = 0;
     this.cart.forEach(item => {
@@ -130,11 +140,34 @@ export class CustomerComponent implements OnInit {
       total = total + lineTotal;
     });
 
-    return total;
+    return total.toFixed(2);
   }
 
 
-  async order(){
+  findTaxTotal() {
+
+    let total = 0;
+    this.cart.forEach(item => {
+      let lineTotal = ((item.unitPrice * item.quantity) * item.tax)
+      total = total + lineTotal;
+    });
+
+    return total.toFixed(2);
+  }
+
+  findGrantTotal() {
+
+    let total = 0;
+    this.cart.forEach(item => {
+      let lineTotal = (((item.unitPrice * item.tax) + item.unitPrice) * item.quantity)
+      total = total + lineTotal;
+    });
+
+    return (total + 2).toFixed(2);
+  }
+
+
+  async order() {
     if (this.orderForm.valid) {
 
       let request = {
@@ -147,21 +180,21 @@ export class CustomerComponent implements OnInit {
 
       request.body.cartList = this.cart;
       request.body.qrId = qrId;
-      request.body.totalAmount = this.findOrderTotal();
+      request.body.totalAmount = this.findGrantTotal();
 
       let response = await this.httpService.httpRequest(request);
       console.log(response);
-      if(response.status == 200){
+      if (response.status == 200) {
 
-        this.notifyService.addToast({ title: "Success", msg: "Order Created Successfully: "+response.data, timeout: 10000, theme: '', position: 'top-center', type: 'success' });
-    
+        this.notifyService.addToast({ title: "Success", msg: "Order Created Successfully: " + response.data, timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+
         await this.ngOnInit();
-        
+
         this.cart = [];
 
         this.orderForm.reset();
 
-      }else{
+      } else {
         this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
       }
     }

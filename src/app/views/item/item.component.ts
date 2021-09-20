@@ -14,6 +14,21 @@ export class ItemComponent implements OnInit {
 
   categoryList = [];
 
+  taxTypeList = [
+    {
+      code: "NA",
+      name: "Not applicable"
+    },
+    {
+      code: "EX",
+      name: "Exempted"
+    },
+    {
+      code: "AP",
+      name: "Applicable"
+    }
+  ]
+
 
   itemList = [];
 
@@ -71,6 +86,9 @@ export class ItemComponent implements OnInit {
       nameEn: new FormControl('', [Validators.required]),
       nameAr: new FormControl('', [Validators.required]),
       unitPrice: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
+      taxType: new FormControl('AP', [Validators.required]),
+      tax: new FormControl(0.00, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
+      specs: new FormControl(''),
       avatar: new FormControl(''),
       categoryId: new FormControl('', [Validators.required]),
       description: new FormControl(null,),
@@ -204,6 +222,8 @@ export class ItemComponent implements OnInit {
     this.itemForm.controls['unitPrice'].setValue(item.unitPrice);
     this.itemForm.controls['description'].setValue(item.description);
     this.itemForm.controls['deactivationDate'].setValue(item.deactivationDate);
+    this.itemForm.controls['taxType'].setValue(item.taxType);
+    this.itemForm.controls['tax'].setValue(item.tax);
   }
 
   deleteItem(Item){
@@ -304,6 +324,20 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  taxTypeChange(event){
+    console.log(event.target.value)
+    switch(event.target.value){
+      case 'NA': 
+        this.itemForm.controls['tax'].disable();
+        break;
+      case 'EX': 
+        this.itemForm.controls['tax'].disable();
+        break;
+      case 'AP': 
+        this.itemForm.controls['tax'].enable();
+        break;
+    }
+  }
 
   async uploadAttachment(file,controleName){
     console.log('fileL: ',file);

@@ -4,14 +4,15 @@ export class User {
   username: string;
   name: string;
   avatar: string;
-  roleId: number;
+  roleId: string;
 
-  constructor( userId: number, token:string,username: string, name:string, avatar: string) {
+  constructor( userId: number, token:string,username: string, name:string, avatar: string, roleId: string) {
     this.userId = userId;
     this.token = token;
     this.username = username;
     this.name = name;
     this.avatar = avatar;
+    this.roleId = roleId;
   }
 
   setValue(value , name): void {

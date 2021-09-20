@@ -7,9 +7,7 @@
     </div>
     <div class="row">
       <div *ngIf="cart.length > 0" class="col-sm-12 col-md-12" style="text-align: center;">
-        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = true">Order Now ( {{ cart.length
-          }}
-          )</button>
+        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = true"><i class="cil-cart"></i> ({{ cart.length}}) </button>
       </div>
     </div>
     <div class="row">
@@ -35,7 +33,7 @@
                 </div>
                 <div class="row">
                   <div class="col s12">
-                    <button type="button" class="btn btn-sm btn-primary" (click)="viewItem(category)">View Item</button>
+                    <button type="button" class="btn btn-sm btn-primary" [disabled]="category.itemList.length === 0" (click)="viewItem(category)">View Item</button>
                   </div>
                 </div>
               </div>
@@ -102,6 +100,7 @@
             <th>Item</th>
             <th>Quintity</th>
             <th>Unit Price</th>
+            <th>Tax</th>
             <th>Total</th>
             <th>Actions</th>
           </tr>
@@ -113,10 +112,11 @@
             </td>
           </tr>
           <tr *ngFor="let item of cart">
-            <td> {{ item.name }}</td>
+            <td> {{ item.nameEn }}</td>
             <td> {{ item.quantity }}</td>
             <td> {{ item.unitPrice }}</td>
-            <td> {{ (item.unitPrice * item.quantity) }}</td>
+            <td> ({{ item.tax }}) {{ ((item.unitPrice * item.quantity) * item.tax).toFixed(2) }}</td>
+            <td> {{ (((item.unitPrice * item.tax) + item.unitPrice) * item.quantity).toFixed(2) }}</td>
             <td>
               <button (click)='deleteItemFromCart(item)' type="button" class="btn btn-ghost-danger"><i
                   class="cil-trash"></i></button>
@@ -126,10 +126,42 @@
         <tfoot>
           <tr>
             <td colspan="4">
-              Total Order Amount
+              Total Before Tax
             </td>
             <td>
-              {{ findOrderTotal() }} JD
+              {{ findOrderBeforeTax() }} JD
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              Total Tax
+            </td>
+            <td>
+              {{ findTaxTotal() }} JD
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              Service Fee
+            </td>
+            <td>
+              {{ 2 }} JD
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              Grant Total
+            </td>
+            <td>
+              {{ findGrantTotal()}} JD
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              Click on Order button to proceed
+            </td>
+            <td>
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Order</button>
             </td>
           </tr>
         </tfoot>
@@ -137,7 +169,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">Name (Optional)</label>
             <input type="text" class="form-control"
               [ngClass]="{'is-invalid': orderForm.controls.name.invalid && (orderForm.controls.name.dirty || orderForm.controls.name.touched)}"
               [formControl]="orderForm.controls['name']" id="alias" placeholder="Enter Your Name">
@@ -151,7 +183,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="name">Mobile</label>
+            <label for="name">Mobile (Optional)</label>
             <input type="text" class="form-control"
               [ngClass]="{'is-invalid': orderForm.controls.mobile.invalid && (orderForm.controls.mobile.dirty || orderForm.controls.mobile.touched)}"
               [formControl]="orderForm.controls['mobile']" id="alias" placeholder="Enter Your Mobile">
@@ -165,7 +197,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="name">Email</label>
+            <label for="name">Email (Optional)</label>
             <input type="text" class="form-control"
               [ngClass]="{'is-invalid': orderForm.controls.email.invalid && (orderForm.controls.email.dirty || orderForm.controls.email.touched)}"
               [formControl]="orderForm.controls['email']" id="alias" placeholder="Enter Your Email">
@@ -176,13 +208,13 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
             <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Order</button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div *ngIf="showRunningOrder">
       <table class="table table-striped">

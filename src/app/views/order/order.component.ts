@@ -5,6 +5,8 @@ import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
 import Swal from 'sweetalert2'
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { io, Socket } from 'socket.io-client';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: 'order.component.html',
@@ -34,17 +36,23 @@ export class OrderComponent implements OnInit {
   pages = [];
   pageSize = 10;
   fromNext = false;
-  
+
   showTable = true;
 
   editMode = false;
 
+  private socket: Socket;
+
   async ngOnInit() {
+
     this.loadForm();
     await this.findorder();
   }
 
-  constructor(private httpService: HttpService, private notifyService: NotifyService) {
+ 
+  constructor(private httpService: HttpService,
+    private notifyService: NotifyService,
+  ) {
 
   }
 
@@ -94,7 +102,7 @@ export class OrderComponent implements OnInit {
     console.log("+this.activePage+", this.activePage);
   }
 
-  cancel(order){
+  cancel(order) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -109,22 +117,22 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/cancel?orderId="+order.id,
+            path: "rest/order/cancel?orderId=" + order.id,
             body: null
           };
-    
+
           let response = await this.httpService.httpRequest(request);
           console.log(response);
-          if(response.status == 200){
-    
+          if (response.status == 200) {
+
             Swal.fire(
               'Changed!',
               'Your order has been canceled.',
               'success'
             )
             await this.findorder();
-    
-          }else{
+
+          } else {
             Swal.fire(
               'Error!',
               'Error ocurred please try again.',
@@ -143,7 +151,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  pay(order){
+  pay(order) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -158,22 +166,22 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/pay?orderId="+order.id,
+            path: "rest/order/pay?orderId=" + order.id,
             body: null
           };
-    
+
           let response = await this.httpService.httpRequest(request);
           console.log(response);
-          if(response.status == 200){
-    
+          if (response.status == 200) {
+
             Swal.fire(
               'Changed!',
               'Your order has been paid.',
               'success'
             )
             await this.findorder();
-    
-          }else{
+
+          } else {
             Swal.fire(
               'Error!',
               'Error ocurred please try again.',
@@ -192,7 +200,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  approve(order){
+  approve(order) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -207,22 +215,22 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/approve?orderId="+order.id,
+            path: "rest/order/approve?orderId=" + order.id,
             body: null
           };
-    
+
           let response = await this.httpService.httpRequest(request);
           console.log(response);
-          if(response.status == 200){
-    
+          if (response.status == 200) {
+
             Swal.fire(
               'Changed!',
               'Your order has been approved.',
               'success'
             )
             await this.findorder();
-    
-          }else{
+
+          } else {
             Swal.fire(
               'Error!',
               'Error ocurred please try again.',
@@ -241,7 +249,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  deliver(order){
+  deliver(order) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -256,22 +264,22 @@ export class OrderComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/order/deliver?orderId="+order.id,
+            path: "rest/order/deliver?orderId=" + order.id,
             body: null
           };
-    
+
           let response = await this.httpService.httpRequest(request);
           console.log(response);
-          if(response.status == 200){
-    
+          if (response.status == 200) {
+
             Swal.fire(
               'Changed!',
               'Your order has been delivered.',
               'success'
             )
             await this.findorder();
-    
-          }else{
+
+          } else {
             Swal.fire(
               'Error!',
               'Error ocurred please try again.',
@@ -291,11 +299,11 @@ export class OrderComponent implements OnInit {
   }
 
 
-  async viewItem(order){
+  async viewItem(order) {
 
     let request = {
       method: "GET",
-      path: "rest/order/timeline?orderId="+order.id,
+      path: "rest/order/timeline?orderId=" + order.id,
       body: null
     };
 
@@ -306,6 +314,6 @@ export class OrderComponent implements OnInit {
       this.myModal.show();
     } else {
     }
-    
+
   }
 }

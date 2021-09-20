@@ -6,7 +6,8 @@
           <i class="fa fa-align-justify"></i> item List
         </div>
         <div class="col-md-2 float-right card-right-button">
-          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; editMode = false;">Add item</button>
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; editMode = false;">Add
+            item</button>
         </div>
       </div>
     </div>
@@ -38,9 +39,12 @@
               <span *ngIf="item.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
             </td>
             <td>
-              <button (click)='editItem(item)' type="button" class="btn btn-ghost-primary"><i class="cil-pen"></i></button>
-              <button (click)='activeOrInactive(item)' type="button" class="btn btn-ghost-warning"><i class="cil-power-standby"></i></button>
-              <button (click)='deleteItem(item)' type="button" class="btn btn-ghost-danger"><i class="cil-trash"></i></button>
+              <button (click)='editItem(item)' type="button" class="btn btn-ghost-primary"><i
+                  class="cil-pen"></i></button>
+              <button (click)='activeOrInactive(item)' type="button" class="btn btn-ghost-warning"><i
+                  class="cil-power-standby"></i></button>
+              <button (click)='deleteItem(item)' type="button" class="btn btn-ghost-danger"><i
+                  class="cil-trash"></i></button>
             </td>
           </tr>
         </tbody>
@@ -66,9 +70,8 @@
 </div>
 
 
-
-<div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
-  <form [formGroup]="itemForm" (ngSubmit)="save()">
+<form [formGroup]="itemForm" (ngSubmit)="save()">
+  <div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
     <div class="card">
       <div class="card-header">
         <div class="row">
@@ -76,7 +79,8 @@
             <h6>Add item</h6>
           </div>
           <div class="col-md-2 float-right card-right-button">
-            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.itemForm.reset();">Back</button>
+            <button type="button" class="btn btn-sm btn-primary"
+              (click)="showTable = !showTable; this.itemForm.reset();">Back</button>
           </div>
         </div>
       </div>
@@ -84,58 +88,106 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
-              <label class="required" for="name">Name English</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.nameEn.invalid && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)}" [formControl]="itemForm.controls['nameEn']" id="alias" placeholder="Enter Name English">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.nameEn.errors && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)">
+              <label class="required" for="name">Name English</label><a href="https://translate.google.jo/"
+                target="_blank"><i class="cil-translate"></i></a>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.nameEn.invalid && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)}"
+                [formControl]="itemForm.controls['nameEn']" id="alias" placeholder="Enter Name English">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.nameEn.errors && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)">
                 <div *ngIf="itemForm.controls.nameEn.errors.required">Name in english required</div>
-              </div>       
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label class="required" for="name">Name Arabic</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.nameAr.invalid && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)}" [formControl]="itemForm.controls['nameAr']" id="alias" placeholder="Enter Name Arabic">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.nameAr.errors && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)">
+              <label class="required" for="name">Name Arabic</label><a href="https://translate.google.jo/"
+                target="_blank"><i class="cil-translate"></i></a>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.nameAr.invalid && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)}"
+                [formControl]="itemForm.controls['nameAr']" id="alias" placeholder="Enter Name Arabic">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.nameAr.errors && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)">
                 <div *ngIf="itemForm.controls.nameAr.errors.required">Name in arabic required</div>
-              </div>     
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="name">Unit Price</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.unitPrice.invalid && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)}" [formControl]="itemForm.controls['unitPrice']" id="alias" placeholder="Enter Unit Price">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.unitPrice.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.unitPrice.invalid && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)}"
+                [formControl]="itemForm.controls['unitPrice']" id="alias" placeholder="Enter Unit Price">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.unitPrice.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
                 <div *ngIf="itemForm.controls.unitPrice.errors.required">Unit price required</div>
                 <div *ngIf="itemForm.controls.unitPrice.errors.pattern">Unit price invalid</div>
-              </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="ccmonth">Tax Type</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.taxType.invalid && (itemForm.controls.taxType.dirty || itemForm.controls.taxType.touched)}"
+                [formControl]="itemForm.controls['taxType']" class="form-control" id="region"
+                (change)="taxTypeChange($event)">
+                <option *ngFor="let taxType of taxTypeList" [value]="taxType.code">{{ taxType.name }}</option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.taxType.errors && (itemForm.controls.taxType.dirty || itemForm.controls.taxType.touched)">
+                <div *ngIf="itemForm.controls.taxType.errors.required">Tax type required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="name">Tax Value</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.tax.invalid && (itemForm.controls.tax.dirty || itemForm.controls.tax.touched)}"
+                [formControl]="itemForm.controls['tax']" id="alias" placeholder="Enter Tax Percentage">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.tax.errors && (itemForm.controls.tax.dirty || itemForm.controls.tax.touched)">
+                <div *ngIf="itemForm.controls.tax.errors.required">Tax value required</div>
+                <div *ngIf="itemForm.controls.tax.errors.pattern">Tax value invalid</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label  class="required"for="ccmonth">Category</label>
-              <select [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}" [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
-                <option [value]="category.id" *ngFor="let category of categoryList">{{ category.nameEn }}</option>
+              <label class="required" for="ccmonth">Category</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}"
+                [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
+                <option *ngFor="let category of categoryList" [value]="category.id">{{ category.nameEn }}</option>
               </select>
-               <div class="invalid-feedback" *ngIf="itemForm.controls.categoryId.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.categoryId.errors && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)">
                 <div *ngIf="itemForm.controls.categoryId.errors.required">Category required</div>
-              </div> 
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="date-input">Deactivation Date</label>
-              <input class="form-control" [formControl]="categoryForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
+              <input class="form-control" [formControl]="itemForm.controls['deactivationDate']" id="date-input"
+                type="date" name="date-input" placeholder="date">
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Avatar</label>
-              <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')" id="alias" placeholder="Upload item Image">
+              <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')"
+                id="alias" placeholder="Upload item Image">
               <div class="image-warning">
                 <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
-                <div *ngIf="this.itemForm.controls['avatar'].value">Uploaded File: <a [href]="this.itemForm.controls['avatar'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                <div *ngIf="this.itemForm.controls['avatar'].value">Uploaded File: <a
+                    [href]="this.itemForm.controls['avatar'].value" target="_blank"><i
+                      class="cil-cloud-download"></i></a></div>
               </div>
             </div>
           </div>
@@ -160,11 +212,10 @@
         </div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
 
-<div *ngIf="!showTable && editMode" [@fadeInOutTranslate] class="col-lg-12">
-  <form [formGroup]="itemForm" (ngSubmit)="save()">
+  <div *ngIf="!showTable && editMode" [@fadeInOutTranslate] class="col-lg-12">
+
     <div class="card">
       <div class="card-header">
         <div class="row">
@@ -172,7 +223,8 @@
             <h6>Update item</h6>
           </div>
           <div class="col-md-2 float-right card-right-button">
-            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.itemForm.reset();">Back</button>
+            <button type="button" class="btn btn-sm btn-primary"
+              (click)="showTable = !showTable; this.itemForm.reset();">Back</button>
           </div>
         </div>
       </div>
@@ -180,58 +232,106 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
-              <label class="required" for="name">Name English</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.nameEn.invalid && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)}" [formControl]="itemForm.controls['nameEn']" id="alias" placeholder="Enter Name English">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.nameEn.errors && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)">
+              <label class="required" for="name">Name English</label><a href="https://translate.google.jo/"
+                target="_blank"><i class="cil-translate"></i></a>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.nameEn.invalid && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)}"
+                [formControl]="itemForm.controls['nameEn']" id="alias" placeholder="Enter Name English">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.nameEn.errors && (itemForm.controls.nameEn.dirty || itemForm.controls.nameEn.touched)">
                 <div *ngIf="itemForm.controls.nameEn.errors.required">Name in english required</div>
-              </div>       
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label class="required" for="name">Name Arabic</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.nameAr.invalid && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)}" [formControl]="itemForm.controls['nameAr']" id="alias" placeholder="Enter Name Arabic">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.nameAr.errors && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)">
+              <label class="required" for="name">Name Arabic</label><a href="https://translate.google.jo/"
+                target="_blank"><i class="cil-translate"></i></a>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.nameAr.invalid && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)}"
+                [formControl]="itemForm.controls['nameAr']" id="alias" placeholder="Enter Name Arabic">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.nameAr.errors && (itemForm.controls.nameAr.dirty || itemForm.controls.nameAr.touched)">
                 <div *ngIf="itemForm.controls.nameAr.errors.required">Name in arabic required</div>
-              </div>     
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="name">Unit Price</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': itemForm.controls.unitPrice.invalid && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)}" [formControl]="itemForm.controls['unitPrice']" id="alias" placeholder="Enter Unit Price">
-              <div class="invalid-feedback" *ngIf="itemForm.controls.unitPrice.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.unitPrice.invalid && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)}"
+                [formControl]="itemForm.controls['unitPrice']" id="alias" placeholder="Enter Unit Price">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.unitPrice.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
                 <div *ngIf="itemForm.controls.unitPrice.errors.required">Unit price required</div>
                 <div *ngIf="itemForm.controls.unitPrice.errors.pattern">Unit price invalid</div>
-              </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="ccmonth">Tax Type</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.taxType.invalid && (itemForm.controls.taxType.dirty || itemForm.controls.taxType.touched)}"
+                [formControl]="itemForm.controls['taxType']" class="form-control" id="region"
+                (change)="taxTypeChange($event)">
+                <option *ngFor="let taxType of taxTypeList" [value]="taxType.code">{{ taxType.name }}</option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.taxType.errors && (itemForm.controls.taxType.dirty || itemForm.controls.taxType.touched)">
+                <div *ngIf="itemForm.controls.taxType.errors.required">Tax type required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="name">Tax Value</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': itemForm.controls.tax.invalid && (itemForm.controls.tax.dirty || itemForm.controls.tax.touched)}"
+                [formControl]="itemForm.controls['tax']" id="alias" placeholder="Enter Tax Percentage">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.tax.errors && (itemForm.controls.tax.dirty || itemForm.controls.tax.touched)">
+                <div *ngIf="itemForm.controls.tax.errors.required">Tax value required</div>
+                <div *ngIf="itemForm.controls.tax.errors.pattern">Tax value invalid</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label  class="required"for="ccmonth">Category</label>
-              <select [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}" [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
-                <option [value]="category.id" *ngFor="let category of categoryList">{{ category.nameEn }}</option>
+              <label class="required" for="ccmonth">Category</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.categoryId.invalid && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)}"
+                [formControl]="itemForm.controls['categoryId']" class="form-control" id="region">
+                <option *ngFor="let category of categoryList" [value]="category.id">{{ category.nameEn }}</option>
               </select>
-               <div class="invalid-feedback" *ngIf="itemForm.controls.categoryId.errors && (itemForm.controls.unitPrice.dirty || itemForm.controls.unitPrice.touched)">
+              <div class="invalid-feedback"
+                *ngIf="itemForm.controls.categoryId.errors && (itemForm.controls.categoryId.dirty || itemForm.controls.categoryId.touched)">
                 <div *ngIf="itemForm.controls.categoryId.errors.required">Category required</div>
-              </div> 
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="date-input">Deactivation Date</label>
-              <input class="form-control" [formControl]="itemForm.controls['deactivationDate']" id="date-input" type="date" name="date-input" placeholder="date">
+              <input class="form-control" [formControl]="itemForm.controls['deactivationDate']" id="date-input"
+                type="date" name="date-input" placeholder="date">
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Avatar</label>
-              <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')" id="alias" placeholder="Upload item Image">
+              <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'avatar')"
+                id="alias" placeholder="Upload item Image">
               <div class="image-warning">
                 <div>Max size allowed 1MB, Accepted file types PNG, JPEG</div>
-                <div *ngIf="this.itemForm.controls['avatar'].value">Uploaded File: <a [href]="this.itemForm.controls['avatar'].value" target="_blank"><i class="cil-cloud-download"></i></a></div>
+                <div *ngIf="this.itemForm.controls['avatar'].value">Uploaded File: <a
+                    [href]="this.itemForm.controls['avatar'].value" target="_blank"><i
+                      class="cil-cloud-download"></i></a></div>
               </div>
             </div>
           </div>
@@ -256,5 +356,5 @@
         </div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>
