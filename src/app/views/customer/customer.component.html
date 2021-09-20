@@ -243,6 +243,7 @@
               <span *ngIf="order.status == 'APPROVED'" class="badge badge-success">In Progress</span>
               <span *ngIf="order.status == 'DELIVERED'" class="badge badge-success">Delivered</span>
               <span *ngIf="order.status == 'PAID'" class="badge badge-success">Paid</span>
+              <span *ngIf="order.status == 'PAY_REQUEST'" class="badge badge-success">In Payment Approval</span>
             </td>
           </tr>
         </tbody>
