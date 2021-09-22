@@ -6,13 +6,16 @@
       </div>
     </div>
     <div class="row">
-      <div *ngIf="cart.length > 0" class="col-sm-12 col-md-12" style="text-align: center;">
+      <div *ngIf="cart.length > 0 && !showCart" class="col-sm-12 col-md-12" style="text-align: right;">
         <button type="button" class="btn btn-sm btn-primary" (click)="showCart = true"><i class="cil-cart"></i> ({{ cart.length}}) </button>
+      </div>
+      <div *ngIf="cart.length > 0 && showCart" class="col-sm-12 col-md-12" style="text-align: right;">
+        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = false; showMenu = true">Continue Ordering</button>
       </div>
     </div>
     <div class="row">
-      <div *ngIf="showCart && !showMenu" class="col-sm-12 col-md-12" style="text-align: center;">
-        <button type="button" class="btn btn-sm btn-primary" (click)="showCart = !showCart">Back</button>
+      <div *ngIf="currentItemList.length > 0 && !showCart" class="col-sm-12 col-md-12" style="text-align: right;">
+        <button type="button" class="btn btn-sm btn-danger" (click)="viewCategoty()">Back</button>
       </div>
     </div>
     <div *ngIf="!showCart && showMenu">
@@ -39,11 +42,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row" *ngIf="currentItemList.length > 0">
-        <div class="col-sm-4" style="text-align: center;">
-          <button type="button" class="btn btn-sm btn-danger" (click)="viewCategoty()">Back</button>
         </div>
       </div>
       <div class="row" *ngIf="currentItemList.length > 0">
@@ -163,7 +161,7 @@
               Click on Order button to proceed
             </td>
             <td>
-              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Order</button>
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Place Order</button>
             </td>
           </tr>
         </tfoot>
@@ -210,15 +208,13 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group">
-            <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="order()">Order</button>
-          </div>
-        </div>
-      </div> -->
     </div>
     <div *ngIf="showRunningOrder">
+      <div class="row">
+        <div class="col-sm-12 col-md-12" style="text-align: right;">
+          <button type="button" class="btn btn-sm btn-primary" (click)="newOrder()">New Order</button>
+        </div>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>

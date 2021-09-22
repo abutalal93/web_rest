@@ -112,6 +112,16 @@ export class CustomerComponent implements OnInit {
       return;
     }
     item.quantity = item.quantity - 1;
+
+    if(item.quantity == 0){
+      this.cart = this.cart.filter(currentItem => currentItem.id !== item.id);
+
+      if(this.cart.length == 0){
+        this.showRunningOrder = false;
+        this.showCart = false;
+        this.showMenu = true;
+      }
+    }
   }
 
 
@@ -164,6 +174,12 @@ export class CustomerComponent implements OnInit {
     });
 
     return (total + 2).toFixed(2);
+  }
+
+  newOrder(){
+    this.showRunningOrder = false;
+    this.showCart = false;
+    this.showMenu = true;
   }
 
 
