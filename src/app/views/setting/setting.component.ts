@@ -5,6 +5,7 @@ import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
 import Swal from 'sweetalert2'
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   templateUrl: 'setting.component.html',
@@ -38,7 +39,7 @@ export class SettingComponent implements OnInit {
 
   @ViewChild('myModal') public myModal: ModalDirective;
 
-  constructor(private httpService: HttpService, private notifyService: NotifyService) {
+  constructor(public authService: AuthService, private httpService: HttpService, private notifyService: NotifyService) {
 
   }
 
@@ -190,6 +191,9 @@ export class SettingComponent implements OnInit {
     if (response.status == 200) {
 
       this.notifyService.addToast({ title: "Success", msg: "Setting updated successfully: " + response.data, timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+
+      this.authService.getLoggedInUser().avatar = this.settingForm.controls['logo'].value;
+
     } else {
       this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
     }
@@ -199,6 +203,25 @@ export class SettingComponent implements OnInit {
     this.myModal.hide();
     this.selectedSpecs = null;
     this.selectedDetailed = null;
+  }
+
+  async uploadAttachment(file,controleName){
+    console.log('fileL: ',file);
+
+    let formData = new FormData(); 
+
+    formData.append("file",file[0]);
+
+    let request = {
+      method: "POST",
+      path: "file/upload",
+      body: formData
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    if (response.status == 200) {
+      this.settingForm.get(controleName).setValue(response.data.url)
+    }
   }
 
 }
