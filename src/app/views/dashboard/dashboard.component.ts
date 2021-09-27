@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpService } from '../services/http.service';
+import { NotifyService } from '../services/notify.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -9,6 +13,13 @@ export class DashboardComponent implements OnInit {
 
   radioModel: string = 'Month';
 
+  constructor(private activatedRoute: ActivatedRoute,
+    private cookieService: CookieService,
+    private httpService: HttpService,
+    private notifyService: NotifyService) {
+
+  }
+  
   // lineChart1
   public lineChart1Data: Array<any> = [
     {
@@ -377,12 +388,30 @@ export class DashboardComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
+    await this,this.findSetting();
     // generate random values for mainChart
     for (let i = 0; i <= this.mainChartElements; i++) {
       this.mainChartData1.push(this.random(50, 200));
       this.mainChartData2.push(this.random(80, 100));
       this.mainChartData3.push(65);
+    }
+  }
+
+  async findSetting() {
+
+
+    let request = {
+      method: "GET",
+      path: "rest/setting",
+      body: null
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    console.log(response);
+    if (response.status == 200) {
+
     }
   }
 }

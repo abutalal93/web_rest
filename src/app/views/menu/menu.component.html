@@ -15,6 +15,7 @@
         <thead>
           <tr>
             <th>Code</th>
+            <th>Icon</th>
             <th>Name English</th>
             <th>Name Arabic</th>
             <th>Status</th>
@@ -29,6 +30,9 @@
           </tr>
           <tr *ngFor="let category of categoryList">
             <td> {{ category.code }}</td>
+            <td> 
+              <img class="image-table" [src]="category.avatar ? category.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
+            </td>
             <td> {{ category.nameEn }}</td>
             <td> {{ category.nameAr }}</td>
             <td>

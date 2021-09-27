@@ -44,10 +44,13 @@ export class ItemComponent implements OnInit {
 
   editMode = false;
 
+  specsList = [];
+
   async ngOnInit() {
     this.loadForm();
     await this.findItem();
     await this.findCategory();
+    await this.findSetting();
   }
 
   constructor(private httpService: HttpService, private notifyService: NotifyService) {
@@ -80,6 +83,23 @@ export class ItemComponent implements OnInit {
     this.fromNext = false;
   }
 
+
+  async findSetting() {
+
+
+    let request = {
+      method: "GET",
+      path: "rest/setting",
+      body: null
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    console.log(response);
+    if (response.status == 200) {
+      this.specsList = response.data.specsList
+    }
+  }
+
   loadForm() {
     this.itemForm = new FormGroup({
       itemId: new FormControl(''),
@@ -93,6 +113,7 @@ export class ItemComponent implements OnInit {
       categoryId: new FormControl('', [Validators.required]),
       description: new FormControl(null,),
       deactivationDate: new FormControl(''),
+      specsId: new FormControl(''),
     });
   }
 
@@ -224,6 +245,7 @@ export class ItemComponent implements OnInit {
     this.itemForm.controls['deactivationDate'].setValue(item.deactivationDate);
     this.itemForm.controls['taxType'].setValue(item.taxType);
     this.itemForm.controls['tax'].setValue(item.tax);
+    this.itemForm.controls['specsId'].setValue(item.specsId);
   }
 
   deleteItem(Item){

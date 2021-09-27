@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   templateUrl: 'order.component.html',
@@ -19,6 +20,7 @@ export class OrderComponent implements OnInit {
 
   @ViewChild('myModal') public myModal: ModalDirective;
 
+  @ViewChild('timeLineModal') public timeLineModal: ModalDirective;
 
   orderList = [];
 
@@ -52,6 +54,7 @@ export class OrderComponent implements OnInit {
  
   constructor(private httpService: HttpService,
     private notifyService: NotifyService,
+    public authService: AuthService
   ) {
 
   }
@@ -315,5 +318,23 @@ export class OrderComponent implements OnInit {
     } else {
     }
 
+  }
+
+  async viewTrack(OrderHistory){
+
+    let request = {
+      method: "GET",
+      path: "rest/order/timeline?orderId="+OrderHistory.id,
+      body: null
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    console.log(response);
+    if (response.status == 200) {
+      this.orderInfo = response.data;
+      this.timeLineModal.show();
+    } else {
+    }
+    
   }
 }

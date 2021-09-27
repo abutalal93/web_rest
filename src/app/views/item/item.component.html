@@ -16,6 +16,7 @@
         <thead>
           <tr>
             <th>Code</th>
+            <th>Icon</th>
             <th>Name English</th>
             <th>Name Arabic</th>
             <th>Unit Price</th>
@@ -25,12 +26,15 @@
         </thead>
         <tbody>
           <tr *ngIf="itemList.length === 0">
-            <td style="text-align: center;color: red" colspan="6">
+            <td style="text-align: center;color: red" colspan="7">
               "No data found"
             </td>
           </tr>
           <tr *ngFor="let item of itemList">
             <td> {{ item.code }}</td>
+            <td> 
+              <img class="image-table" [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
+            </td>
             <td> {{ item.nameEn }}</td>
             <td> {{ item.nameAr }}</td>
             <td> {{ item.unitPrice }} {{ "JOD" }}</td>
@@ -127,7 +131,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="ccmonth">Tax Type</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.specsId.invalid && (itemForm.controls.specsId.dirty || itemForm.controls.specsId.touched)}"
+                [formControl]="itemForm.controls['specsId']" class="form-control" id="region">
+                <option *ngFor="let specs of specsList" [value]="specs.id">{{ specs.alias }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="ccmonth">Tax Type</label>
               <select
@@ -142,7 +156,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="name">Tax Value</label>
               <input type="text" class="form-control"
@@ -271,7 +285,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="ccmonth">Spcification Type</label>
+              <select
+                [ngClass]="{'is-invalid': itemForm.controls.specsId.invalid && (itemForm.controls.specsId.dirty || itemForm.controls.specsId.touched)}"
+                [formControl]="itemForm.controls['specsId']" class="form-control" id="region">
+                <option *ngFor="let specs of specsList" [value]="specs.id">{{ specs.alias }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="ccmonth">Tax Type</label>
               <select
@@ -286,7 +310,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="required" for="name">Tax Value</label>
               <input type="text" class="form-control"

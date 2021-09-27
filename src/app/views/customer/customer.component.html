@@ -31,7 +31,7 @@
               <div class="card-content">
                 <div class="row">
                   <div class="col s12">
-                    <strong>{{ category.name}}</strong>
+                    <strong>{{ category.nameEn}}</strong>
                   </div>
                 </div>
                 <div class="row">
@@ -59,14 +59,19 @@
               <div class="card-content">
                 <div class="row">
                   <div class="col s12">
-                    <strong>{{ item.name}}</strong>
+                    <strong>{{ item.nameEn}}</strong>
                   </div>
                 </div>
-                <div class="row">
+                <div *ngIf="item.itemSpecs && item.itemSpecs.detailList && item.itemSpecs.detailList.length > 0" class="row">
                   <div class="col s12">
-                    <p>
-                      {{ item.description}}
-                    </p>
+                    <div class="form-group row">
+                      <div *ngFor="let detail of item.itemSpecs.detailList" class="form-check">
+                        <input [checked]="checked" class="form-check-input" type="checkbox" value="detail" id="{{ detail.id }}" (change)="checked = !checked">
+                        <label class="form-check-label" for="checkbox1">
+                          {{ detail.nameEn}}: {{ detail.unitPrice}} JD
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -119,8 +124,8 @@
               </div>
             </td>
             <td> {{ item.unitPrice }}</td>
-            <td> ({{ item.tax }}) {{ ((item.unitPrice * item.quantity) * item.tax).toFixed(2) }}</td>
-            <td> {{ (((item.unitPrice * item.tax) + item.unitPrice) * item.quantity).toFixed(2) }}</td>
+            <td> ({{ item.tax }}{{'%'}}) {{ ((item.unitPrice * item.quantity) * (item.tax/100)).toFixed(2) }}</td>
+            <td> {{ (((item.unitPrice * (item.tax/100)) + item.unitPrice) * item.quantity).toFixed(2) }}</td>
           </tr>
         </tbody>
         <tfoot>
@@ -145,7 +150,7 @@
               Service Fee
             </td>
             <td>
-              {{ 2 }} JD
+              {{ qrInfo.serviceFees }} JD
             </td>
           </tr>
           <tr>

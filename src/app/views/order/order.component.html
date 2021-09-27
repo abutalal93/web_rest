@@ -37,14 +37,16 @@
               <span *ngIf="order.status == 'PAID'" class="badge badge-danger">Paid</span>
               <span *ngIf="order.status == 'DELIVERED'" class="badge badge-warning">Delivered</span>
               <span *ngIf="order.status == 'APPROVED'" class="badge badge-success">In Progress</span>
+              <span *ngIf="order.status == 'PAY_REQUEST'" class="badge badge-success">Waiting Payment Approval</span>
             </td>
             <td>
               <button (click)='view(order)' type="button" (click)="viewItem(order)" class="btn btn-ghost-primary">View Item</button>
               <button *ngIf="order.status == 'INIT'" (click)='approve(order)' type="button" class="btn btn-ghost-success">Approve</button>
-              <button *ngIf="order.status != 'INIT' && order.status != 'PAID'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Pay</button>
-              <button *ngIf="order.status != 'INIT' && order.status == 'PAY_REQUEST'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Approve Payment</button>
-              <button *ngIf="order.status != 'INIT' && order.status != 'DELIVERED'" (click)='deliver(order)' type="button" class="btn btn-ghost-success">Deliver</button>
+              <button *ngIf="order.status != 'INIT' && order.status != 'PAID' && order.status !='PAY_REQUEST'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Pay</button>
+              <button *ngIf="order.status != 'INIT' && order.status == 'PAY_REQUEST' && authService && authService.getLoggedInUser().roleId == 'SUPER_ADMIN'" (click)='pay(order)' type="button" class="btn btn-ghost-danger">Approve Payment</button>
+              <button *ngIf="order.status != 'INIT' && order.status != 'DELIVERED' && order.status !='PAY_REQUEST'" (click)='deliver(order)' type="button" class="btn btn-ghost-success">Deliver</button>
               <button *ngIf="order.status == 'INIT'" (click)='cancel(order)' type="button" class="btn btn-ghost-danger">Cancel</button>
+              <button (click)='view(order)' type="button" (click)="viewTrack(order)" class="btn btn-ghost-primary">Timeline</button>
             </td>
           </tr>
         </tbody>
@@ -139,6 +141,49 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #timeLineModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Order Info</h4>
+        <button type="button" class="close" (click)="timeLineModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="orderInfo.trackList && orderInfo.trackList.length === 0">
+                <td style="text-align: center;color: red" colspan="4">
+                  "No data found"
+                </td>
+              </tr>
+              <tr *ngFor="let item of orderInfo.trackList">
+                <td> {{ item.createDate | date:'short'}}</td>
+                <td> {{ item.status }}</td>
+                <td> {{ item.userReference }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="timeLineModal.hide()">Close</button>
         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
     </div><!-- /.modal-content -->

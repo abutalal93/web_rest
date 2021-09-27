@@ -35,6 +35,9 @@ export class CustomerComponent implements OnInit {
   private socket: Socket;
 
 
+  checked: false;
+
+
   constructor(private activatedRoute: ActivatedRoute,
     private cookieService: CookieService,
     private httpService: HttpService,
@@ -158,7 +161,7 @@ export class CustomerComponent implements OnInit {
 
     let total = 0;
     this.cart.forEach(item => {
-      let lineTotal = ((item.unitPrice * item.quantity) * item.tax)
+      let lineTotal = ((item.unitPrice * item.quantity) * (item.tax/100))
       total = total + lineTotal;
     });
 
@@ -169,11 +172,11 @@ export class CustomerComponent implements OnInit {
 
     let total = 0;
     this.cart.forEach(item => {
-      let lineTotal = (((item.unitPrice * item.tax) + item.unitPrice) * item.quantity)
+      let lineTotal = (((item.unitPrice * (item.tax/100)) + item.unitPrice) * item.quantity)
       total = total + lineTotal;
     });
 
-    return (total + 2).toFixed(2);
+    return (total + this.qrInfo.serviceFees).toFixed(2);
   }
 
   newOrder(){
