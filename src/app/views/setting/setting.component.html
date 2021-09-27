@@ -31,7 +31,7 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <label class="required" for="name">Service Fees</label>
-                <input type="text" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.serviceFees.invalid && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)}" [formControl]="settingForm.controls['serviceFees']" id="alias" placeholder="Enter Service Fees">
+                <input type="number" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.serviceFees.invalid && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)}" [formControl]="settingForm.controls['serviceFees']" id="alias" placeholder="Enter Service Fees">
                 <div class="invalid-feedback" *ngIf="settingForm.controls.serviceFees.errors && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)">
                   <div *ngIf="settingForm.controls.serviceFees.errors.required">Service fees required</div>
                 </div>
