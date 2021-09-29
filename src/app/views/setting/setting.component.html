@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label class="required"for="name">Brand English</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
                 <input type="text" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.brandNameEn.invalid && (settingForm.controls.brandNameEn.dirty || settingForm.controls.brandNameEn.touched)}" [formControl]="settingForm.controls['brandNameEn']" id="alias" placeholder="Enter Name English">
@@ -19,7 +19,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label class="required" for="name">Brand Arabic</label><a href="https://translate.google.jo/" target="_blank"><i class="cil-translate"></i></a>
                 <input type="text" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.brandNameAr.invalid && (settingForm.controls.brandNameAr.dirty || settingForm.controls.brandNameAr.touched)}" [formControl]="settingForm.controls['brandNameAr']" id="alias" placeholder="Enter Name Arabic">
@@ -28,16 +28,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <label class="required" for="name">Service Fees</label>
-                <input type="number" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.serviceFees.invalid && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)}" [formControl]="settingForm.controls['serviceFees']" id="alias" placeholder="Enter Service Fees">
-                <div class="invalid-feedback" *ngIf="settingForm.controls.serviceFees.errors && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)">
-                  <div *ngIf="settingForm.controls.serviceFees.errors.required">Service fees required</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3"> 
+            <div class="col-sm-4"> 
               <div class="form-group">
                 <label for="name">Logo</label>
                 <input type="file" class="form-control" (change)="uploadAttachment($event.target.files,'logo')" id="alias" placeholder="Upload Logo Image">
@@ -49,10 +40,27 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-6">
               <div class="form-group">
-                <button style="margin: 2px;" type="button" class="btn btn-success px-4"
-                  (click)="addSpecs()">Add Spcification</button>
+                <label class="required" for="ccmonth">Service Fees Type</label>
+                <select
+                  [ngClass]="{'is-invalid': settingForm.controls.calculationType.invalid && (settingForm.controls.calculationType.dirty || settingForm.controls.calculationType.touched)}"
+                  [formControl]="settingForm.controls['calculationType']" class="form-control" id="region">
+                  <option *ngFor="let feesType of serviceFeesTypeList" [value]="feesType.code">{{ feesType.name }}</option>
+                </select>
+                <div class="invalid-feedback"
+                  *ngIf="settingForm.controls.calculationType.errors && (settingForm.controls.calculationType.dirty || settingForm.controls.calculationType.touched)">
+                  <div *ngIf="settingForm.controls.calculationType.errors.required">Service fees type required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="required" for="name">Service Fees</label>
+                <input type="number" class="form-control" [ngClass]="{'is-invalid': settingForm.controls.serviceFees.invalid && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)}" [formControl]="settingForm.controls['serviceFees']" id="alias" placeholder="Enter Service Fees">
+                <div class="invalid-feedback" *ngIf="settingForm.controls.serviceFees.errors && (settingForm.controls.serviceFees.dirty || settingForm.controls.serviceFees.touched)">
+                  <div *ngIf="settingForm.controls.serviceFees.errors.required">Service fees required</div>
+                </div>
               </div>
             </div>
           </div>
@@ -60,7 +68,7 @@
       </div>
     </form>
   </div>
-  <div *ngIf="specsList && specsList.length > 0" [@fadeInOutTranslate] class="col-lg-12">
+  <div [@fadeInOutTranslate] class="col-lg-12">
     <form [formGroup]="settingForm" (ngSubmit)="save()">
       <div class="card">
         <div class="card-header">
@@ -68,9 +76,13 @@
             <div class="col-md-10">
               <h6>Item Spcification</h6>
             </div>
+            <div class="col-md-2 float-right card-right-button">
+              <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+                  (click)="addSpecs()">Add Spcification</button>
+            </div>
           </div>
         </div>
-        <div class="card-body">
+        <div *ngIf="specsList && specsList.length > 0" class="card-body">
           <div *ngFor="let specs of specsList" class="row">
             <div class="col-sm-3">
               <div class="form-group">
@@ -85,6 +97,9 @@
               <button (click)="openDialog(specs)" type="button" class="btn btn-brand btn-sm btn-facebook mr-1" style="margin-top: 33px">
                 <span>Add Details</span>
               </button>
+            </div>
+            <div class="col-sm-6 float-right card-right-button">
+              <button (click)='deleteSpecs(specs)' type="button" class="btn btn-ghost-danger"><i class="cil-trash"></i></button>
             </div>
             <div *ngIf="specs.detailList && specs.detailList.length > 0" class="col-sm-12">
               <table class="table table-striped">

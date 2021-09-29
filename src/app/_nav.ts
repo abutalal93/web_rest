@@ -17,6 +17,11 @@ export const navItems: INavData[] = [
     icon: 'cil-cart'
   },
   {
+    name: 'Discount Managment',
+    url: '/discount',
+    icon: 'cil-cart'
+  },
+  {
     name: 'QR Managment',
     url: '/qrs',
     icon: 'cil-qr-code'

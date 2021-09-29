@@ -18,6 +18,8 @@ export class SettingComponent implements OnInit {
 
   specsList = [];
 
+  deletedSpecsIdList = [];
+
   counter: number = 0;
 
   detailedCounter: number = 0;
@@ -25,6 +27,18 @@ export class SettingComponent implements OnInit {
   selectedSpecs = null;
 
   selectedDetailed = null;
+
+  serviceFeesTypeList = [
+    {
+      code: "FIXED",
+      name: "Fixed"
+    },
+    {
+      code: "PERCENTAGE",
+      name: "Percentage"
+    }
+  ]
+
 
   async ngOnInit() {
     this.loadForm();
@@ -55,6 +69,7 @@ export class SettingComponent implements OnInit {
       nameAr: new FormControl(''),
       unitPrice: new FormControl(''),
       serviceFees: new FormControl(''),
+      calculationType: new FormControl('')
     });
   }
 
@@ -76,6 +91,8 @@ export class SettingComponent implements OnInit {
       this.settingForm.controls['id'].setValue(data.id);
       this.settingForm.controls['brandNameEn'].setValue(data.brandNameEn);
       this.settingForm.controls['brandNameAr'].setValue(data.brandNameAr);
+      this.settingForm.controls['calculationType'].setValue(data.calculationType);
+      this.settingForm.controls['serviceFees'].setValue(data.serviceFees);
       this.settingForm.controls['logo'].setValue(data.logo);
 
       this.counter = (data.specsList) ? (data.specsList.length): (0);
@@ -185,6 +202,7 @@ export class SettingComponent implements OnInit {
     };
 
     request.body.specsList = this.specsList;
+    request.body.deletedSpecsIdList = this.deletedSpecsIdList;
 
     let response = await this.httpService.httpRequest(request);
     console.log(response);
@@ -222,6 +240,12 @@ export class SettingComponent implements OnInit {
     if (response.status == 200) {
       this.settingForm.get(controleName).setValue(response.data.url)
     }
+  }
+
+  deleteSpecs(specs){
+    this.deletedSpecsIdList.push(specs.id);
+    this.specsList = this.specsList.filter(currentSpecs => currentSpecs.id !== specs.id);
+    this.specsList = this.specsList.filter(currentSpecs => currentSpecs.counter !== specs.counter);
   }
 
 }

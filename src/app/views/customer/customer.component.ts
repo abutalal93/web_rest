@@ -72,6 +72,13 @@ export class CustomerComponent implements OnInit {
 
       this.qrInfo.categoryList.forEach(category => {
         category.itemList.map(v => Object.assign(v, { quantity: 1 }))
+        category.itemList.forEach(item => {
+          if(item.itemSpecs && item.itemSpecs.detailList.length > 0){
+            item.itemSpecs.detailList.forEach(detail => {
+              this.orderForm.addControl('detail' + detail.id, new FormControl(null));
+            });
+          }
+        });
       });
 
       console.log('this.qrInfo: ', this.qrInfo);
@@ -176,7 +183,11 @@ export class CustomerComponent implements OnInit {
       total = total + lineTotal;
     });
 
-    return (total + this.qrInfo.serviceFees).toFixed(2);
+    if(this.qrInfo.serviceFeesType == 'PERCENTAGE'){
+      return (total + (this.qrInfo.serviceFees/100)).toFixed(2);
+    }else{
+      return (total + this.qrInfo.serviceFees).toFixed(2);
+    }    
   }
 
   newOrder(){
