@@ -93,6 +93,11 @@ export class CustomerComponent implements OnInit {
     } else {
       this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
     }
+
+    if(this.cookieService.check('cart')){
+      this.cart = JSON.parse(this.cookieService.get('cart'));
+    }
+
   }
 
 
@@ -142,6 +147,8 @@ export class CustomerComponent implements OnInit {
     } else {
       this.cart[sectionIndex].quantity = item.quantity;
     }
+
+    this.cookieService.set('cart',JSON.stringify(this.cart));
 
     console.log('this.cart: ', this.cart)
   }
@@ -215,6 +222,8 @@ export class CustomerComponent implements OnInit {
       let response = await this.httpService.httpRequest(request);
       console.log(response);
       if (response.status == 200) {
+
+        this.cookieService.delete('cart');
 
         this.notifyService.addToast({ title: "Success", msg: "Order Created Successfully: " + response.data, timeout: 10000, theme: '', position: 'top-center', type: 'success' });
 
