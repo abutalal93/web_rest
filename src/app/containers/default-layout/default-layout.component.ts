@@ -1,3 +1,5 @@
+import { ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { Component,OnInit } from '@angular/core';
 import { User } from '../../views/model/user';
 import { AuthService } from '../../views/services/auth-service.service';
@@ -8,7 +10,8 @@ import { waitressItems } from '../../_waitress';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
@@ -18,8 +21,11 @@ export class DefaultLayoutComponent implements OnInit {
     this.sidebarMinimized = e;
   }
 
-  constructor(public authService: AuthService, private httpService: HttpService) {
-    console.log("DefaultLayoutComponent: ")
+  constructor(public authService: AuthService, private httpService: HttpService, private ref: ChangeDetectorRef) {
+    console.log("DefaultLayoutComponent: ");
+    setInterval(() => {
+      this.ref.markForCheck();
+    }, 1000);
   }
 
   logout(){

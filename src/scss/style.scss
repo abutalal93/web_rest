@@ -76,3 +76,60 @@
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+
+
+  .image-checkbox {
+    cursor: pointer;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 4px solid transparent;
+    margin-bottom: 0;
+    outline: 0;
+  }
+  .image-checkbox input[type="checkbox"] {
+    display: none;
+  }
+  
+  .image-checkbox-checked {
+      border-color: #4783B0;
+      border-style: dashed;
+      border-width: 3px;
+  }
+  .modal-body{
+      max-height: 440px !important;
+      overflow-y: scroll;
+  }
+  .image-checkbox .fa {
+      color: #4A79A3;
+      background-color: #fff;
+      padding: 1px;
+      top: 18px;
+      right: 40px;
+      border-radius: 50%;
+      position: absolute;
+      border: 2px dashed;
+  }
+  .image-checkbox-checked .fa {
+    display: block !important;
+  }
+  img {
+      vertical-align: middle;
+      border-style: none;
+      width: 35px;
+      height: 35px;
+      margin: 4px -1px;
+  }
+  span.name{
+     font-size: 12px;
+     text-align: center;
+  }
+  
+  label.image-checkbox{
+      width: 100%;
+  }
+
+  .hidden {
+    display: none;
+  }
+  

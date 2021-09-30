@@ -1,7 +1,7 @@
 <app-header
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
-  [navbarBrandFull]="{src: authService.getLoggedInUser().avatar,  width: 50, height: 50, alt: 'Rest Logo'}"
+  [navbarBrandFull]="{src: (authService.getLoggedInUser() && authService.getLoggedInUser().avatar ? authService.getLoggedInUser().avatar: ''),  width: 50, height: 50, alt: 'Rest Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="'lg'">
@@ -31,7 +31,7 @@
         <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="img-avatar" alt="admin@bootstrapmaster.com"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <div class="dropdown-header text-center"><strong>{{ authService.getLoggedInUser().name }}</strong></div>
+        <div class="dropdown-header text-center"><strong>{{ authService.getLoggedInUser() ? authService.getLoggedInUser().name: '' }}</strong></div>
         <a class="dropdown-item" [routerLink]="['/setting']"><i class="fa fa-user"></i> Profile</a>
         <a class="dropdown-item" [routerLink]="['/setting']"><i class="fa fa-wrench"></i> Setting</a>
         <a class="dropdown-item" [routerLink]="['/change-pass']"><i class="fa fa-user"></i> Change Password</a>

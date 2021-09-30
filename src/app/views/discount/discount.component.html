@@ -1,0 +1,207 @@
+<div *ngIf="showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fa fa-align-justify"></i> Discount List
+        </div>
+        <div class="col-md-2 float-right card-right-button">
+          <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; editMode = false;">Add Discount</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form [formGroup]="discountForm" (ngSubmit)="save()">
+  <div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Add discount</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button type="button" class="btn btn-sm btn-primary"
+              (click)="showTable = !showTable; this.discountForm.reset();">Back</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="required" for="name">Name</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': discountForm.controls.name.invalid && (discountForm.controls.name.dirty || discountForm.controls.name.touched)}"
+                [formControl]="discountForm.controls['name']" id="alias" placeholder="Enter Name">
+              <div class="invalid-feedback"
+                *ngIf="discountForm.controls.name.errors && (discountForm.controls.name.dirty || discountForm.controls.name.touched)">
+                <div *ngIf="discountForm.controls.name.errors.required">Name required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="required" for="ccmonth">Discount Type</label>
+              <select
+                [ngClass]="{'is-invalid': discountForm.controls.discountType.invalid && (discountForm.controls.discountType.dirty || discountForm.controls.discountType.touched)}"
+                [formControl]="discountForm.controls['discountType']" class="form-control" id="region">
+                <option *ngFor="let type of discountTypeList" [value]="type.code">{{ type.name }}</option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="discountForm.controls.discountType.errors && (discountForm.controls.discountType.dirty || discountForm.controls.discountType.touched)">
+                <div *ngIf="discountForm.controls.discountType.errors.required">Discount type required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="required" for="name">Discount Price</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': discountForm.controls.discountValue.invalid && (discountForm.controls.discountValue.dirty || discountForm.controls.discountValue.touched)}"
+                [formControl]="discountForm.controls['discountValue']" id="alias" placeholder="Enter Discount Value">
+              <div class="invalid-feedback"
+                *ngIf="discountForm.controls.discountValue.errors && (discountForm.controls.discountValue.dirty || discountForm.controls.discountValue.touched)">
+                <div *ngIf="discountForm.controls.discountValue.errors.required">Discount value required</div>
+                <div *ngIf="discountForm.controls.discountValue.errors.pattern">Discount value invalid</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="date-input">Start Date</label>
+              <input class="form-control" [formControl]="discountForm.controls['startDateTime']" id="date-input"
+                type="datetime-local" name="date-input" placeholder="date">
+              <div class="invalid-feedback"
+                *ngIf="discountForm.controls.startDateTime.errors && (discountForm.controls.startDateTime.dirty || discountForm.controls.startDateTime.touched)">
+                <div *ngIf="discountForm.controls.startDateTime.errors.required">Start date required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="required" for="date-input">End Date</label>
+              <input class="form-control" [formControl]="discountForm.controls['endDateTime']" id="date-input"
+                type="datetime-local" name="date-input" placeholder="date">
+              <div class="invalid-feedback"
+                *ngIf="discountForm.controls.endDateTime.errors && (discountForm.controls.endDateTime.dirty || discountForm.controls.endDateTime.touched)">
+                <div *ngIf="discountForm.controls.endDateTime.errors.required">End date required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Item List</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button style="margin: 2px;" type="button" class="btn btn-warning px-4"
+                (click)="openItemDialog()">Import Item</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Icon</th>
+                  <th>Name English</th>
+                  <th>Name Arabic</th>
+                  <th>Unit Price</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="selectedItemList.length === 0">
+                  <td style="text-align: center;color: red" colspan="8">
+                    "No data found"
+                  </td>
+                </tr>
+                <tr *ngFor="let item of selectedItemList">
+                  <td> {{ item.code }}</td>
+                  <td> 
+                    <img class="image-table" [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
+                  </td>
+                  <td> {{ item.nameEn }}</td>
+                  <td> {{ item.nameAr }}</td>
+                  <td> {{ item.unitPrice }} {{ "JOD" }}</td>
+                  <td> {{ item.categoryName }}</td>
+                  <td>
+                    <button (click)='deleteItem(item)' type="button" class="btn btn-ghost-danger"><i
+                        class="cil-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="save()">Save</button>
+            <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+              (click)="showTable = !showTable; this.discountForm.reset();">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Select Item</h4>
+        <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <ng-container *ngIf="itemList && itemList.length > 0 ;then SHOW_ITEM;else NO_ITEM"></ng-container>
+          <ng-template #SHOW_ITEM>
+            <div class="col-md-3 text-center" style="padding: 2px 2px 2px 2px;" *ngFor="let item of itemList">
+              <label class="image-checkbox" id="{{ 'check' + (item.id) }}">
+                <!-- <i class="fa fa-check hidden"></i> -->
+                <input type="checkbox" name="image[]" value="" (change)="checkItem($event , item)" />
+                <img class="img-responsive" [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'" />
+                <br/>
+                <span class="name">{{item.nameEn}}</span>
+                <br/>
+                <span class="name">{{item.unitPrice}} JD</span>
+              </label>
+            </div>
+          </ng-template>
+          <ng-template #NO_ITEM>
+            <h6 style="color: red;text-align: center;">{{ "No Data Found" }}</h6>
+          </ng-template>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addItems()">Save</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

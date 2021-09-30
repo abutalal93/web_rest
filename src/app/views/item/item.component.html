@@ -20,13 +20,14 @@
             <th>Name English</th>
             <th>Name Arabic</th>
             <th>Unit Price</th>
+            <th>Category</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="itemList.length === 0">
-            <td style="text-align: center;color: red" colspan="7">
+            <td style="text-align: center;color: red" colspan="8">
               "No data found"
             </td>
           </tr>
@@ -38,6 +39,7 @@
             <td> {{ item.nameEn }}</td>
             <td> {{ item.nameAr }}</td>
             <td> {{ item.unitPrice }} {{ "JOD" }}</td>
+            <td> {{ item.categoryName }}</td>
             <td>
               <span *ngIf="item.status == 'ACTIVE'" class="badge badge-success">Active</span>
               <span *ngIf="item.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>

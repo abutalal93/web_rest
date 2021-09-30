@@ -82,12 +82,20 @@ export const routes: Routes = [
         loadChildren: () => import('./views/order/order.module').then(m => m.OrderModule)
       },
       {
+        path: 'discount',
+        loadChildren: () => import('./views/discount/discount.module').then(m => m.DiscountModule)
+      },
+      {
         path: 'users',
         loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
       },
       {
         path: 'setting',
         loadChildren: () => import('./views/setting/setting.module').then(m => m.SettingModule)
+      },
+      {
+        path: 'change-pass',
+        loadChildren: () => import('./views/change-pass/change-pass.module').then(m => m.ChangePasswordModule)
       },
       {
         path: 'order-history',

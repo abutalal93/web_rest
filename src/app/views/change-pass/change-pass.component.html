@@ -1,0 +1,59 @@
+<div [@fadeInOutTranslate] class="col-lg-12">
+    <form [formGroup]="changePassordForm" (ngSubmit)="save()">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-10">
+              <h6>Chang Password</h6>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="required"for="name">Current password</label>
+                <input type="password" class="form-control" [ngClass]="{'is-invalid': changePassordForm.controls.currentPassword.invalid && (changePassordForm.controls.currentPassword.dirty || changePassordForm.controls.currentPassword.touched)}" [formControl]="changePassordForm.controls['currentPassword']" id="alias" placeholder="Enter Current Password">
+                <div class="invalid-feedback" *ngIf="changePassordForm.controls.currentPassword.errors && (changePassordForm.controls.currentPassword.dirty || changePassordForm.controls.currentPassword.touched)">
+                  <div *ngIf="changePassordForm.controls.currentPassword.errors.required">Old password required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="required"for="name">New password</label>
+                <input type="password" class="form-control" [ngClass]="{'is-invalid': changePassordForm.controls.newPassword.invalid && (changePassordForm.controls.newPassword.dirty || changePassordForm.controls.newPassword.touched)}" [formControl]="changePassordForm.controls['newPassword']" id="alias" placeholder="Enter New Password">
+                <div class="invalid-feedback" *ngIf="changePassordForm.controls.newPassword.errors && (changePassordForm.controls.newPassword.dirty || changePassordForm.controls.newPassword.touched)">
+                  <div *ngIf="changePassordForm.controls.newPassword.errors.required">New password required</div>
+                  <div *ngIf="changePassordForm.controls.newPassword.errors.pattern">Password must have at least one capital letter, one small letter, one number,one character </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="required"for="name">Confirm password</label>
+                <input type="password" class="form-control" [ngClass]="{'is-invalid': changePassordForm.controls.confirmPassword.invalid && (changePassordForm.controls.confirmPassword.dirty || changePassordForm.controls.confirmPassword.touched)}" [formControl]="changePassordForm.controls['confirmPassword']" id="alias" placeholder="Enter Confirm Password">
+                <div class="invalid-feedback" *ngIf="changePassordForm.controls.confirmPassword.errors && (changePassordForm.controls.confirmPassword.dirty || changePassordForm.controls.confirmPassword.touched)">
+                  <div *ngIf="changePassordForm.controls.confirmPassword.errors.required">Confirm password required</div>
+                  <div *ngIf="changePassordForm.controls.confirmPassword.errors.equalto">Confirm password does not match new password</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="save()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+ 
