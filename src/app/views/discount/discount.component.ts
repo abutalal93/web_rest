@@ -306,7 +306,7 @@ export class DiscountComponent implements OnInit {
     }
   }
 
-  addItems(event) {
+  addItems() {
     console.log('this.selectedItemList.length: ', this.selectedItemList.length);
     //----------------- push student into sections -----------------------------------//
     this.clearSelectedItems();
