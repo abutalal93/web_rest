@@ -65,7 +65,7 @@ export class ItemComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/category/search",
+      path: "rest/category/search?page=0&size=100",
       body: null
     };
 
@@ -125,7 +125,7 @@ export class ItemComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/item/search",
+      path: "rest/item/search?page=0&size=100",
       body: null
     };
 

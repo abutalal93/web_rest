@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/category/search",
+      path: "rest/category/search?page=0&size=100",
       body: null
     };
 
