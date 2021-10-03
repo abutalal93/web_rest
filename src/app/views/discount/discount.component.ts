@@ -28,10 +28,16 @@ export class DiscountComponent implements OnInit {
     }
   ]
 
+  discountList = [];
+
   selectedItemList = [];
 
 
   itemList = [];
+
+  popupItemList = [];
+
+  finalItemList = [];
 
   page = 0;
   activePage = 1;
@@ -49,6 +55,7 @@ export class DiscountComponent implements OnInit {
 
   async ngOnInit() {
     this.loadForm();
+    await this.findDiscount();
     await this.findItem();
   }
 
@@ -67,6 +74,32 @@ export class DiscountComponent implements OnInit {
     });
   }
 
+  async findDiscount() {
+
+    if (!this.fromNext) {
+      this.activePage = 1;
+    }
+
+    let request = {
+      method: "GET",
+      path: "rest/discount/search",
+      body: null
+    };
+
+    let response = await this.httpService.httpRequest(request);
+    console.log(response);
+    if (response.status == 200) {
+      this.discountList = response.data.pageList;
+      let numberOfPages = response.data.numberOfPages;
+      this.fillPageArray(numberOfPages);
+    } else {
+      this.fillPageArray(1);
+      this.discountList = [];
+    }
+
+    this.fromNext = false;
+  }
+
   async findItem() {
 
     if (!this.fromNext) {
@@ -75,7 +108,7 @@ export class DiscountComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/item/search",
+      path: "rest/item/search?page=0&size=100",
       body: null
     };
 
@@ -83,14 +116,8 @@ export class DiscountComponent implements OnInit {
     console.log(response);
     if (response.status == 200) {
       this.itemList = response.data.pageList;
-      let numberOfPages = response.data.numberOfPages;
-      this.fillPageArray(numberOfPages);
-    } else {
-      this.fillPageArray(1);
-      this.itemList = [];
+      this.popupItemList = response.data.pageList;
     }
-
-    this.fromNext = false;
   }
 
   fillPageArray(numberOfPages) {
@@ -127,6 +154,13 @@ export class DiscountComponent implements OnInit {
         body: this.discountForm.value
       };
 
+      let itemIdList = [];
+      this.finalItemList.forEach(item =>{ 
+        itemIdList.push(item.id);
+      });
+
+      request.body.itemIdList = itemIdList;
+
       let response = await this.httpService.httpRequest(request);
       console.log(response);
       if(response.status == 200){
@@ -138,7 +172,7 @@ export class DiscountComponent implements OnInit {
 
         this.discountForm.reset();
 
-        await this.findItem();
+        await this.findDiscount();
 
       }else{
         this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
@@ -159,6 +193,13 @@ export class DiscountComponent implements OnInit {
         body: this.discountForm.value
       };
 
+      let itemIdList = [];
+      this.finalItemList.forEach(item =>{ 
+        itemIdList.push(item.id);
+      });
+
+      request.body.itemIdList = itemIdList;
+
       let response = await this.httpService.httpRequest(request);
       console.log(response);
       if(response.status == 200){
@@ -170,7 +211,7 @@ export class DiscountComponent implements OnInit {
 
         this.discountForm.reset();
 
-        await this.findItem();
+        await this.findDiscount();
 
       }else{
         this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
@@ -179,15 +220,74 @@ export class DiscountComponent implements OnInit {
   }
 
 
-  editItem(item){
+  editDiscount(item){
 
     this.showTable=!this.showTable;
 
     this.editMode = true;
 
+    this.discountForm.controls['discountId'].setValue(item.id);
+    this.discountForm.controls['name'].setValue(item.name);
+    this.discountForm.controls['discountType'].setValue(item.discountType);
+    this.discountForm.controls['discountValue'].setValue(item.discountValue);
+    this.discountForm.controls['startDateTime'].setValue(item.startDateTime);
+    this.discountForm.controls['endDateTime'].setValue(item.endDateTime);
+
+    this.finalItemList = item.itemList;
+
+    this.finalItemList.forEach(item =>{ 
+      this.popupItemList = this.popupItemList.filter(currentItem => currentItem.id !== item.id);
+    });
+    
   }
 
-  deleteItem(discount){
+  deleteItemForPopUp(item){
+    this.finalItemList = this.finalItemList.filter(currentItem => currentItem.id !== item.id);//finalItemList
+    this.popupItemList.push(item);//popupItemList
+  }
+
+  openItemDialog(){
+    this.myModal.show();
+  }
+
+  closeModal(){
+    this.myModal.hide();
+  }
+
+  checkItem(values: any, item: any) {
+    switch (values.currentTarget.checked) {
+      case true:
+        $('#check' + item.id).addClass('image-checkbox-checked');
+        this.selectedItemList.push(item);
+        break;
+      case false:
+        $('#check' + item.id).removeClass('image-checkbox-checked');
+        this.selectedItemList = this.selectedItemList.filter(currentItem => currentItem.id !== item.id);
+        break;
+    }
+  }
+
+  addItems() {
+    console.log('this.selectedItemList.length: ', this.selectedItemList.length);
+    //----------------- push item into discounts -----------------------------------//
+
+    this.selectedItemList.forEach(item =>{ 
+      this.popupItemList = this.popupItemList.filter(currentItem => currentItem.id !== item.id);
+    });
+
+    this.selectedItemList.forEach(item =>{ 
+      this.finalItemList.push(item);
+    });
+
+    this.clearSelectedItems();
+    this.myModal.hide();
+  }
+
+  clearSelectedItems() {
+    this.selectedItemList = [];
+  }
+
+  deleteDiscount(discount){
 
     Swal.fire({
       title: 'Are you sure?',
@@ -212,10 +312,10 @@ export class DiscountComponent implements OnInit {
     
             Swal.fire(
               'Deleted!',
-              'Your Discount has been deleted.',
+              'Your discount has been deleted.',
               'success'
             )
-            await this.findItem();
+            await this.findDiscount();
     
           }else{
             Swal.fire(
@@ -251,7 +351,7 @@ export class DiscountComponent implements OnInit {
         return new Promise(async (resolve) => {
           let request = {
             method: "PUT",
-            path: "rest/discount/activeInactive?itemId="+discount.id,
+            path: "rest/discount/activeInactive?discountId="+discount.id,
             body: this.discountForm.value
           };
     
@@ -261,10 +361,10 @@ export class DiscountComponent implements OnInit {
     
             Swal.fire(
               'Changed!',
-              'Your Discount has been changed.',
+              'Your discount has been changed.',
               'success'
             )
-            await this.findItem();
+            await this.findDiscount();
     
           }else{
             Swal.fire(
@@ -284,37 +384,4 @@ export class DiscountComponent implements OnInit {
       }
     });
   }
-
-  openItemDialog(){
-    this.myModal.show();
-  }
-
-  closeModal(){
-    this.myModal.hide();
-  }
-
-  checkItem(values: any, item: any) {
-    switch (values.currentTarget.checked) {
-      case true:
-        $('#check' + item.id).addClass('image-checkbox-checked');
-        this.selectedItemList.push(item);
-        break;
-      case false:
-        $('#check' + item.id).removeClass('image-checkbox-checked');
-        this.selectedItemList = this.selectedItemList.filter(currentItem => currentItem.id !== item.id);
-        break;
-    }
-  }
-
-  addItems() {
-    console.log('this.selectedItemList.length: ', this.selectedItemList.length);
-    //----------------- push student into sections -----------------------------------//
-    this.clearSelectedItems();
-    this.myModal.hide();
-  }
-
-  clearSelectedItems() {
-    this.selectedItemList = [];
-  }
-
 }

@@ -2,7 +2,7 @@
   <div style="background-color: white;" *ngIf="isLoaded">
     <div class="row">
       <div class="col-sm-12 col-md-12" style="text-align: center;">
-        <img [src]="qrInfo.logo" style="width: 150px;" alt="rest Logo" />
+        <img [src]="qrInfo.logo" style="max-width: 150px; max-height: 150px;" alt="rest Logo" />
       </div>
     </div>
     <div class="row">
@@ -49,9 +49,8 @@
           <div class="product-card">
             <div class="card  z-depth-4">
               <div class="card-image">
-                <a class="btn-floating btn-large price waves-effect waves-light brown darken-3" style="color: white;">{{
-                  item.unitPrice}}
-                  JD</a>
+                <a class="btn-floating btn-large price waves-effect waves-light brown darken-3" style="color: white;">
+                  {{ item.unitPrice }} JD</a>
                 <img class="product-image"
                   [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"
                   alt="product-img">
@@ -60,18 +59,12 @@
                 <div class="row">
                   <div class="col s12">
                     <strong>{{ item.nameEn}}</strong>
+                    <input *ngIf="item.itemSpecs && item.itemSpecs.detailList && item.itemSpecs.detailList.length > 0" type="button" value="(+ Details)" (click)="openItemDetailsDialog(item)">
                   </div>
                 </div>
-                <div *ngIf="item.itemSpecs && item.itemSpecs.detailList && item.itemSpecs.detailList.length > 0" class="row">
+                <div class="row">
                   <div class="col s12">
-                    <div class="form-group row">
-                      <div *ngFor="let detail of item.itemSpecs.detailList" class="form-check">
-                        <input [formControl]="orderForm.controls['detail' + (detail.id)]" class="form-check-input" type="checkbox">
-                        <label class="form-check-label" for="checkbox1">
-                          {{ detail.nameEn}}: {{ detail.unitPrice}} JD
-                        </label>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
                 <div class="row">
@@ -88,6 +81,8 @@
                   <div class="col s12">
                     <button type="button" [disabled]="item.quantity == 0" class="btn btn-sm btn-primary"
                       (click)="addToCart(item)">Add to cart</button>
+                    <span style="color: red;" *ngIf="item.discount && item.discount.discountType == 'FIXED'"> Discount on this item ({{ item.discount.discountValue }}JD)</span>
+                    <span style="color: red;" *ngIf="item.discount && item.discount.discountType == 'PERCENTAGE'"> Discount on this item ({{ item.discount.discountValue }}%)</span>
                   </div>
                 </div>
               </div>
@@ -102,6 +97,7 @@
           <tr>
             <th>Item</th>
             <th>Quantity</th>
+            <th>Discount</th>
             <th>Unit Price</th>
             <th>Tax</th>
             <th>Total</th>
@@ -109,7 +105,7 @@
         </thead>
         <tbody>
           <tr *ngIf="cart.length === 0">
-            <td style="text-align: center;color: red" colspan="5">
+            <td style="text-align: center;color: red" colspan="6">
               "No data found"
             </td>
           </tr>
@@ -122,6 +118,11 @@
                   class="input-text qty text" size="4" pattern="" inputmode="">
                 <input type="button" value="+" class="plus" (click)="plus(item)">
               </div>
+            </td>
+            <td>
+              {{ item.discount ? (
+                item.discount && item.discount.discountType == 'FIXED' ? (item.discount.discountValue + 'JD') : (item.discount.discountValue + '%')
+              ) : ('0') }}
             </td>
             <td> {{ item.unitPrice }}</td>
             <td> ({{ item.tax }}{{'%'}}) {{ ((item.unitPrice * item.quantity) * (item.tax/100)).toFixed(2) }}</td>
@@ -252,5 +253,44 @@
         </tbody>
       </table>
     </div>
+
+    <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Select Item</h4>
+            <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <ng-container *ngIf="popupItemList && popupItemList.length > 0 ;then SHOW_ITEM;else NO_ITEM"></ng-container>
+              <ng-template #SHOW_ITEM>
+                <div class="col-md-3 text-center" *ngFor="let item of popupItemList">
+                  <label class="image-checkbox" id="{{ 'check' + (item.id) }}">
+                    <!-- <i class="fa fa-check hidden"></i> -->
+                    <input type="checkbox" name="image[]" value="" (change)="checkItem($event , item)" />
+                    <img class="img-responsive" [src]="item.avatar ? item.avatar : 'https://i.pinimg.com/originals/6b/58/5c/6b585c9e85455886c1290193425b8e71.png'" />
+                    <br/>
+                    <span class="name">{{item.nameEn}}</span>
+                    <br/>
+                    <span class="name">{{item.unitPrice}} JD</span>
+                  </label>
+                </div>
+              </ng-template>
+              <ng-template #NO_ITEM>
+                <h6 style="color: red;text-align: center;">{{ "No Data Found" }}</h6>
+              </ng-template>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="addSaveDetails()">Save</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+    
   </div>
 </form>

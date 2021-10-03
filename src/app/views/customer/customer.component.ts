@@ -6,6 +6,9 @@ import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
 import { map } from 'rxjs/operators';
 import { io, Socket } from 'socket.io-client';
+import { ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+declare var $: any;
 
 @Component({
   selector: 'app-customer',
@@ -13,6 +16,8 @@ import { io, Socket } from 'socket.io-client';
   styleUrls: ['customer.component.scss'],
 })
 export class CustomerComponent implements OnInit {
+
+  @ViewChild('myModal') public myModal: ModalDirective;
 
   orderForm: FormGroup;
 
@@ -33,6 +38,11 @@ export class CustomerComponent implements OnInit {
   showMenu = true;
 
   private socket: Socket;
+
+  popupItemList = [];
+  selectedItemList = [];
+  selectedCategory = null;
+  selectedProduct = null;
 
 
   checked: false;
@@ -239,4 +249,52 @@ export class CustomerComponent implements OnInit {
     }
   }
 
+  openItemDetailsDialog(item){
+
+    // this.selectedCategory = selectedCategory;
+    this.selectedProduct = item;
+
+    this.popupItemList = item.itemSpecs.detailList;
+
+    this.myModal.show();
+  }
+
+  closeModal(){
+    this.myModal.hide();
+  }
+
+  checkItem(values: any, item: any) {
+    switch (values.currentTarget.checked) {
+      case true:
+        $('#check' + item.id).addClass('image-checkbox-checked');
+        this.selectedItemList.push(item);
+        break;
+      case false:
+        $('#check' + item.id).removeClass('image-checkbox-checked');
+        this.selectedItemList = this.selectedItemList.filter(currentItem => currentItem.id !== item.id);
+        break;
+    }
+  }
+
+  addSaveDetails() {
+    console.log('this.selectedItemList.length: ', this.selectedItemList.length);
+    //----------------- push item into discounts -----------------------------------//
+    // let itemIndex = this.specsList.findIndex(specs => specs.counter === currentSpecs.counter);
+    // this.specsList[specsIndex].alias = this.settingForm.get('alias' + currentSpecs.counter).value;
+
+    // this.selectedItemList.forEach(item =>{ 
+    //   this.popupItemList = this.popupItemList.filter(currentItem => currentItem.id !== item.id);
+    // });
+
+    // this.selectedItemList.forEach(item =>{ 
+    //   this.finalItemList.push(item);
+    // });
+
+    this.clearSelectedItems();
+    this.myModal.hide();
+  }
+
+  clearSelectedItems() {
+    this.selectedItemList = [];
+  }
 }

@@ -55,6 +55,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CustomerComponent } from './views/customer/customer.component';
 import { CompetitionComponent } from './views/competition/competition.component';
 import { CustomValidationService } from './views/services/custom-validation-service.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { CustomValidationService } from './views/services/custom-validation-serv
     ReactiveFormsModule,
     ToastyModule.forRoot(),
     LoadingBarHttpModule,
-    QRCodeModule
+    QRCodeModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
