@@ -2,7 +2,7 @@
   <div style="background-color: white;" *ngIf="isLoaded">
     <div class="row">
       <div class="col-sm-12 col-md-12" style="text-align: center;">
-        <img [src]="qrInfo.logo" style="max-width: 150px; max-height: 150px;" alt="rest Logo" />
+        <img [src]="qrInfo.logo" style="max-width: 500px; max-height: 5000px; width: 150px; height: 150px;" alt="rest Logo" />
       </div>
     </div>
     <div class="row">
@@ -92,7 +92,7 @@
       </div>
     </div>
     <div *ngIf="showCart">
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive-sm">
         <thead>
           <tr>
             <th>Item</th>
@@ -221,7 +221,7 @@
           <button type="button" class="btn btn-sm btn-primary" (click)="newOrder()">New Order</button>
         </div>
       </div>
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive-sm">
         <thead>
           <tr>
             <th>Reference</th>

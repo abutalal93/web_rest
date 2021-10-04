@@ -4,6 +4,7 @@ import { fadeInOutTranslate } from '../animations/animation';
 import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
 import Swal from 'sweetalert2'
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   templateUrl: 'qrs.component.html',
@@ -27,12 +28,15 @@ export class QrsComponent implements OnInit {
 
   qrForm: FormGroup;
 
+  qrLogo = null;
+
   async ngOnInit() {
     this.loadForm();
     await this.findQrs();
+    this.qrLogo = this.authService.getLoggedInUser().avatar;
   }
 
-  constructor(private httpService: HttpService, private notifyService: NotifyService) {
+  constructor(private httpService: HttpService, private notifyService: NotifyService, private authService: AuthService) {
 
   }
 

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive-sm">
         <thead>
           <tr>
             <th>Code</th>
@@ -31,7 +31,7 @@
             <td>
               <a target="_blank" [href]="qr.code">
                 <!-- <qrcode [qrdata]="qr.code" [width]="128" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode> -->
-                <qr-img img="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/KFC_Logo.svg/640px-KFC_Logo.svg.png" content="{{ qr.code }}" 
+                <qr-img img="{{ qrLogo }}" content="{{ qr.code }}" 
               size="150"
               img-width="30"
               img-height="30"
