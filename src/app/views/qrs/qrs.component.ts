@@ -95,35 +95,35 @@ export class QrsComponent implements OnInit {
     });
   }
 
-  async save(){
-    this.httpService.markFormGroupTouched(this.qrForm);
+  // async save(){
+  //   this.httpService.markFormGroupTouched(this.qrForm);
 
-    if (this.qrForm.valid) {
+  //   if (this.qrForm.valid) {
 
-      let request = {
-        method: "POST",
-        path: "rest/qr/create",
-        body: this.qrForm.value
-      };
+  //     let request = {
+  //       method: "POST",
+  //       path: "rest/qr/create",
+  //       body: this.qrForm.value
+  //     };
 
-      let response = await this.httpService.httpRequest(request);
-      console.log(response);
-      if(response.status == 200){
+  //     let response = await this.httpService.httpRequest(request);
+  //     console.log(response);
+  //     if(response.status == 200){
 
-        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+  //       this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
       
       
-        this.showTable=!this.showTable;
+  //       this.showTable=!this.showTable;
 
-        this.qrForm.reset();
+  //       this.qrForm.reset();
 
-        await this.findQrs();
+  //       await this.findQrs();
 
-      }else{
-        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
-      }
-    }
-  }
+  //     }else{
+  //       this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+  //     }
+  //   }
+  // }
 
   async update(){
     this.httpService.markFormGroupTouched(this.qrForm);
