@@ -8,6 +8,7 @@ import { ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { SocketioService } from '../services/socket-one-service';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 declare var $: any;
 
@@ -117,7 +118,7 @@ export class CustomerComponent implements OnInit {
   }
 
   setupCustomerSocketConnection(channelId) {
-    this.socket = io("http://localhost:3000");
+    this.socket = io(environment.socketUrl);
 
     this.socket.on('customer-'+channelId, (data: string) => {
       console.log(data);

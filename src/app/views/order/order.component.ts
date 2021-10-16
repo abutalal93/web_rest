@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth-service.service';
 import { SocketioService } from '../services/socket-one-service';
 import { CookieService } from 'ngx-cookie-service';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: 'order.component.html',
@@ -57,7 +58,7 @@ export class OrderComponent implements OnInit {
   }
 
   setupRestSocketConnection(channelId) {
-    this.socket = io("http://localhost:3000");
+    this.socket = io(environment.socketUrl);
 
     this.socket.on('rest-'+channelId, (data: string) => {
       console.log(data);
