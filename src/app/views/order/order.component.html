@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-striped table-responsive-sm">
+      <table class="table table-striped table-responsive">
         <thead>
           <tr>
             <th>ID</th>
@@ -27,12 +27,12 @@
             </td>
           </tr>
           <tr *ngFor="let order of orderList">
-            <td> {{ order.id }}</td>
-            <td> {{ order.reference }}</td>
-            <td> {{ order.createDate | date:'short'}}</td>
-            <td> {{ order.totalAmount }} JD</td>
-            <td> {{ order.qrAlias }}</td>
-            <td>
+            <td data-title="ID"> {{ order.id }}</td>
+            <td data-title="Reference"> {{ order.reference }}</td>
+            <td data-title="Date"> {{ order.createDate | date:'short'}}</td>
+            <td data-title="Total Amount"> {{ order.totalAmount }} JD</td>
+            <td data-title="QR Alias"> {{ order.qrAlias }}</td>
+            <td data-title="Status">
               <span *ngIf="order.status == 'INIT'" class="badge badge-success">Pending</span>
               <span *ngIf="order.status == 'PAID'" class="badge badge-danger">Paid</span>
               <span *ngIf="order.status == 'DELIVERED'" class="badge badge-warning">Delivered</span>
@@ -174,9 +174,9 @@
                 </td>
               </tr>
               <tr *ngFor="let item of orderInfo.trackList">
-                <td> {{ item.createDate | date:'short'}}</td>
-                <td> {{ item.status }}</td>
-                <td> {{ item.userReference }}</td>
+                <td data-title="Date"> {{ item.createDate | date:'short'}}</td>
+                <td data-title="Status"> {{ item.status }}</td>
+                <td data-title="User"> {{ item.userReference }}</td>
               </tr>
             </tbody>
           </table>

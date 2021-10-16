@@ -14,7 +14,8 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: 'order.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['order.component.scss'],
 })
 export class OrderComponent implements OnInit {
 

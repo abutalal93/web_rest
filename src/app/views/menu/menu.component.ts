@@ -7,7 +7,8 @@ import Swal from 'sweetalert2'
 
 @Component({
   templateUrl: 'menu.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
 

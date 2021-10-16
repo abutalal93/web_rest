@@ -52,12 +52,12 @@
             </td>
           </tr>
           <tr *ngFor="let order of orderList">
-            <td> {{ order.id }}</td>
-            <td> {{ order.reference }}</td>
-            <td> {{ order.createDate | date:'short'}}</td>
-            <td> {{ order.totalAmount }} JD</td>
-            <td> {{ order.qrAlias }}</td>
-            <td>
+            <td data-title="ID"> {{ order.id }}</td>
+            <td data-title="Reference"> {{ order.reference }}</td>
+            <td data-title="Date"> {{ order.createDate | date:'short'}}</td>
+            <td data-title="Total Amount"> {{ order.totalAmount }} JD</td>
+            <td data-title="QR Alias"> {{ order.qrAlias }}</td>
+            <td data-title="Status">
               <span *ngIf="order.status == 'CANCELED'" class="badge badge-danger">Canceled</span>
               <span *ngIf="order.status == 'CLOSED'" class="badge badge-success">Closed</span>
             </td>
@@ -115,9 +115,9 @@
                 </td>
               </tr>
               <tr *ngFor="let item of orderInfo.trackList">
-                <td> {{ item.createDate | date:'short'}}</td>
-                <td> {{ item.status }}</td>
-                <td> {{ item.userReference }}</td>
+                <td data-title="Date"> {{ item.createDate | date:'short'}}</td>
+                <td data-title="Status"> {{ item.status }}</td>
+                <td data-title="User"> {{ item.userReference }}</td>
               </tr>
             </tbody>
           </table>

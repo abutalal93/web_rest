@@ -10,7 +10,8 @@ import { AuthService } from '../services/auth-service.service';
 
 @Component({
   templateUrl: 'user.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['user.component.scss'],
 })
 export class UserComponent implements OnInit {
 

@@ -8,7 +8,8 @@ import { AuthService } from '../services/auth-service.service';
 
 @Component({
   templateUrl: 'qrs.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['qrs.component.scss'],
 })
 export class QrsComponent implements OnInit {
 

@@ -10,7 +10,8 @@ declare var $: any;
 
 @Component({
   templateUrl: 'discount.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['discount.component.scss'],
 })
 export class DiscountComponent implements OnInit {
 

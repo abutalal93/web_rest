@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   apiUrl: 'http://wjadtoha.com/',
   prefix: 'core/',
-  socketUrl: 'http://localhost:3000',
+  socketUrl: 'http://94.127.213.230:3000',
 };

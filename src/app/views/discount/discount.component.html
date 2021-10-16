@@ -30,12 +30,12 @@
             </td>
           </tr>
           <tr *ngFor="let discount of discountList">
-            <td> {{ discount.name }}</td>
-            <td> {{ discount.discountType }}</td>
-            <td> {{ discount.discountValue  }}</td>
-            <td> {{ discount.startDateTime | date:'short' }}</td>
-            <td> {{ discount.endDateTime | date:'short' }}</td>
-            <td>
+            <td data-title="Name"> {{ discount.name }}</td>
+            <td data-title="Discount Type"> {{ discount.discountType }}</td>
+            <td data-title="Discount Value"> {{ discount.discountValue  }}</td>
+            <td data-title="Start Date"> {{ discount.startDateTime | date:'short' }}</td>
+            <td data-title="End Date"> {{ discount.endDateTime | date:'short' }}</td>
+            <td data-title="Status">
               <span *ngIf="discount.status == 'ACTIVE'" class="badge badge-success">Active</span>
               <span *ngIf="discount.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
             </td>
@@ -189,14 +189,14 @@
                   </td>
                 </tr>
                 <tr *ngFor="let item of finalItemList">
-                  <td> {{ item.code }}</td>
+                  <td data-title="Code"> {{ item.code }}</td>
                   <td> 
                     <img class="image-table" [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
                   </td>
-                  <td> {{ item.nameEn }}</td>
-                  <td> {{ item.nameAr }}</td>
-                  <td> {{ item.unitPrice }} {{ "JOD" }}</td>
-                  <td> {{ item.categoryName }}</td>
+                  <td data-title="Name English"> {{ item.nameEn }}</td>
+                  <td data-title="Name Arabic"> {{ item.nameAr }}</td>
+                  <td data-title="Unit Price"> {{ item.unitPrice }} {{ "JOD" }}</td>
+                  <td data-title="Category"> {{ item.categoryName }}</td>
                   <td>
                     <button (click)='deleteItemForPopUp(item)' type="button" class="btn btn-ghost-danger"><i
                         class="cil-trash"></i></button>
@@ -342,14 +342,14 @@
                   </td>
                 </tr>
                 <tr *ngFor="let item of finalItemList">
-                  <td> {{ item.code }}</td>
+                  <td data-title="Code"> {{ item.code }}</td>
                   <td> 
                     <img class="image-table" [src]="item.avatar ? item.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
                   </td>
-                  <td> {{ item.nameEn }}</td>
-                  <td> {{ item.nameAr }}</td>
-                  <td> {{ item.unitPrice }} {{ "JOD" }}</td>
-                  <td> {{ item.categoryName }}</td>
+                  <td data-title="Name English"> {{ item.nameEn }}</td>
+                  <td data-title="Name Arabic"> {{ item.nameAr }}</td>
+                  <td data-title="Unit Price"> {{ item.unitPrice }} {{ "JOD" }}</td>
+                  <td data-title="Category"> {{ item.categoryName }}</td>
                   <td>
                     <button (click)='deleteItemForPopUp(item)' type="button" class="btn btn-ghost-danger"><i
                         class="cil-trash"></i></button>

@@ -29,17 +29,17 @@
             </td>
           </tr>
           <tr *ngFor="let category of categoryList">
-            <td> {{ category.code }}</td>
+            <td data-title="Code"> {{ category.code }}</td>
             <td> 
               <img class="image-table" [src]="category.avatar ? category.avatar : 'https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg'"alt="product-img">
             </td>
-            <td> {{ category.nameEn }}</td>
-            <td> {{ category.nameAr }}</td>
+            <td data-title="Name English"> {{ category.nameEn }}</td>
+            <td data-title="Name Arabic"> {{ category.nameAr }}</td>
             <td>
               <span *ngIf="category.status == 'ACTIVE'" class="badge badge-success">Active</span>
               <span *ngIf="category.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
             </td>
-            <td>
+            <td data-title="Status">
               <button (click)='editQr(category)' type="button" class="btn btn-ghost-primary"><i class="cil-pen"></i></button>
               <button (click)='activeOrInactive(category)' type="button" class="btn btn-ghost-warning"><i class="cil-power-standby"></i></button>
               <button (click)='deleteQr(category)' type="button" class="btn btn-ghost-danger"><i class="cil-trash"></i></button>

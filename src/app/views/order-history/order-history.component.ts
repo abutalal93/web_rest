@@ -8,7 +8,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   templateUrl: 'order-history.component.html',
-  animations: [fadeInOutTranslate]
+  animations: [fadeInOutTranslate],
+  styleUrls: ['order-history.component.scss'],
+
 })
 export class OrderHistoryComponent implements OnInit {
 
@@ -65,7 +67,7 @@ export class OrderHistoryComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/order/history?reference="+this.reference+"&dateFrom="+this.dateFrom+"&dateTo"+this.dateTo,
+      path: "rest/order/history?reference="+this.reference+"&dateFrom="+this.dateFrom+"&dateTo"+this.dateTo+"&page=0&size=500",
       body: null
     };
 

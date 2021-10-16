@@ -39,9 +39,9 @@
             </qr-img>
               </a>
             </td>
-            <td> {{ qr.alias }}</td>
-            <td> {{ qr.createDate  | date:'short' }}</td>
-            <td>
+            <td data-title="Table Name"> {{ qr.alias }}</td>
+            <td data-title="Create Date"> {{ qr.createDate  | date:'short' }}</td>
+            <td data-title="Status">
               <span *ngIf="qr.status == 'ACTIVE'" class="badge badge-success">Active</span>
               <span *ngIf="qr.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
             </td>
