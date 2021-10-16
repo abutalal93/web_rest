@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -56,12 +56,16 @@ import { CustomerComponent } from './views/customer/customer.component';
 import { CompetitionComponent } from './views/competition/competition.component';
 import { CustomValidationService } from './views/services/custom-validation-service.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SocketIoModule } from 'ngx-socket-io';
+import { SocketioService } from './views/services/socket-one-service';
+import { SocketTwo } from './views/services/socket-two-service';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    SocketIoModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
@@ -78,7 +82,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ToastyModule.forRoot(),
     LoadingBarHttpModule,
     QRCodeModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -95,13 +99,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
+    SocketioService,
     AuthService,
     AuthGuardService,
     IconSetService,
     CookieService,
     HttpService,
     NotifyService,
-    CustomValidationService
+    CustomValidationService,
   ],
   bootstrap: [ AppComponent ]
 })

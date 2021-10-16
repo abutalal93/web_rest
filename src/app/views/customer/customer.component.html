@@ -1,7 +1,7 @@
 <form [formGroup]="orderForm" (ngSubmit)="order()">
   <div style="background-color: white;" *ngIf="isLoaded">
     <div class="row">
-      <div class="col-sm-12 col-md-12" style="text-align: center;">
+      <div (click)="sendMessage()" class="col-sm-12 col-md-12" style="text-align: center;">
         <img [src]="qrInfo.logo" style="max-width: 500px; max-height: 5000px; width: 150px; height: 150px;" alt="rest Logo" />
       </div>
     </div>
@@ -77,7 +77,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="row"> -->
+                <div class="row">
                   <div class="col s12">
                     <button type="button" [disabled]="item.quantity == 0" class="btn btn-sm btn-primary"
                       (click)="addToCart(item)">Add to cart</button>

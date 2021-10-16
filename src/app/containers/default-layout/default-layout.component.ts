@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Component,OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { User } from '../../views/model/user';
 import { AuthService } from '../../views/services/auth-service.service';
 import { HttpService } from '../../views/services/http.service';
@@ -21,7 +22,16 @@ export class DefaultLayoutComponent implements OnInit {
     this.sidebarMinimized = e;
   }
 
-  constructor(public authService: AuthService, private httpService: HttpService, private ref: ChangeDetectorRef) {
+  user = {
+    userId: null,
+    token: null,
+    username: null,
+    name: null,
+    avatar: null,
+    roleId: null,
+  };
+
+  constructor(public authService: AuthService, private httpService: HttpService, private ref: ChangeDetectorRef, private cookieService: CookieService) {
     console.log("DefaultLayoutComponent: ");
     setInterval(() => {
       this.ref.markForCheck();
@@ -34,14 +44,12 @@ export class DefaultLayoutComponent implements OnInit {
 
  async ngOnInit() {
   console.log("ngOnInit DefaultLayoutComponent: ")
-    let user: User = this.authService.getLoggedInUser();
-    if(user == undefined){
-      await this.httpService.refreshToken();
-      user = this.authService.getLoggedInUser();
-      console.log("user: ",user);
+    this.user = this.authService.getLoggedInUser();
+    if(this.user == undefined){
+      this.user = JSON.parse(this.cookieService.get('user'))
     }
 
-    if(user.roleId == 'WAITRESS'){
+    if(this.user.roleId == 'WAITRESS'){
       this.navItems = waitressItems;
     }
     

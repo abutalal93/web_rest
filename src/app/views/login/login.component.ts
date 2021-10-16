@@ -51,9 +51,10 @@ export class LoginComponent implements OnInit{
       if(response.status == 200){
 
         this.authService.setIsUserLoggedIn(true);
-        const user = new User(response.data.id, response.data.token, response.data.firstName + " " +response.data.lastName,response.data.username, response.data.avatar,response.data.type);
+        const user = new User(response.data.id, response.data.restId, response.data.token, response.data.firstName + " " +response.data.lastName,response.data.username, response.data.avatar,response.data.type);
         this.authService.setLoggedInUser(user);
         this.cookieService.set('rest_user', response.data.token);
+        this.cookieService.set('user', JSON.stringify(user));
         let url = this.authService.getRedirectUrl();
         this.router.navigate([url]).then(() => {
         });

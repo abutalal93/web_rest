@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
-import { map } from 'rxjs/operators';
-import { io, Socket } from 'socket.io-client';
 import { ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { SocketioService } from '../services/socket-one-service';
+import { io, Socket } from 'socket.io-client';
+
 declare var $: any;
 
 @Component({
@@ -37,8 +38,6 @@ export class CustomerComponent implements OnInit {
 
   showMenu = true;
 
-  private socket: Socket;
-
   popupItemList = [];
   selectedItemList = [];
   selectedCategory = null;
@@ -47,16 +46,21 @@ export class CustomerComponent implements OnInit {
 
   checked: false;
 
+  socket: Socket;
 
   constructor(private activatedRoute: ActivatedRoute,
     private cookieService: CookieService,
     private httpService: HttpService,
-    private notifyService: NotifyService) {
+    private notifyService: NotifyService,
+    private socketService: SocketioService) {
 
   }
 
-  async ngOnInit() {
+  sendMessage(message) {
+    this.socket.emit('rest-', message);
+  }
 
+  async ngOnInit() {
     this.loadForm();
 
     let qrId = this.activatedRoute.snapshot.queryParamMap.get('qrId');
@@ -79,6 +83,8 @@ export class CustomerComponent implements OnInit {
       this.isLoaded = true;
 
       this.qrInfo = response.data;
+
+      this.setupCustomerSocketConnection(this.qrInfo.id);
 
       this.qrInfo.categoryList.forEach(category => {
         category.itemList.map(v => Object.assign(v, { quantity: 1 }))
@@ -110,6 +116,15 @@ export class CustomerComponent implements OnInit {
 
   }
 
+  setupCustomerSocketConnection(channelId) {
+    this.socket = io("http://localhost:3000");
+
+    this.socket.on('customer-'+channelId, (data: string) => {
+      console.log(data);
+      this.ngOnInit();
+    });
+  }
+
 
   loadForm() {
     this.orderForm = new FormGroup({
@@ -118,7 +133,6 @@ export class CustomerComponent implements OnInit {
       email: new FormControl('', [Validators.email]),
     });
   }
-
   viewItem(category) {
     this.currentItemList = category.itemList
   }
@@ -232,6 +246,8 @@ export class CustomerComponent implements OnInit {
       let response = await this.httpService.httpRequest(request);
       console.log(response);
       if (response.status == 200) {
+
+        this.sendMessage({ channelId: this.qrInfo.restId, body: 'hello waiters'});
 
         this.cookieService.delete('cart');
 

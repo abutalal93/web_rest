@@ -137,10 +137,10 @@ export class SettingComponent implements OnInit {
     this.specsList[specsIndex].alias = this.settingForm.get('alias' + currentSpecs.counter).value;
   }
 
-  // openDialog(specs){
-  //   this.myModal.show();
-  //   this.selectedSpecs = specs;
-  // }
+  openDialog(specs){
+    this.myModal.show();
+    this.selectedSpecs = specs;
+  }
 
   addDetail(){
 

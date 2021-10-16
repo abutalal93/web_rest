@@ -132,7 +132,7 @@ export class HttpService {
     });
 
     this.authService.setIsUserLoggedIn(true);
-    const user = new User(http_response.data.id, http_response.data.token, http_response.data.firstName + " " +http_response.data.lastName,http_response.data.username, http_response.data.avatar,http_response.data.type);
+    const user = new User(http_response.data.id,http_response.data.restId, http_response.data.token, http_response.data.firstName + " " +http_response.data.lastName,http_response.data.username, http_response.data.avatar,http_response.data.type);
     this.authService.setLoggedInUser(user);
 
     return http_response;

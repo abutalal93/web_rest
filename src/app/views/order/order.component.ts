@@ -5,9 +5,11 @@ import { HttpService } from '../services/http.service';
 import { NotifyService } from '../services/notify.service';
 import Swal from 'sweetalert2'
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth-service.service';
+import { SocketioService } from '../services/socket-one-service';
+import { CookieService } from 'ngx-cookie-service';
+import { io, Socket } from 'socket.io-client';
 
 @Component({
   templateUrl: 'order.component.html',
@@ -43,25 +45,41 @@ export class OrderComponent implements OnInit {
 
   editMode = false;
 
-  private socket: Socket;
+  socket: Socket
 
   async ngOnInit() {
+    let user = JSON.parse(this.cookieService.get('user'));
+    this.setupRestSocketConnection(user.restId);
 
     this.loadForm();
+
     await this.findorder();
+  }
+
+  setupRestSocketConnection(channelId) {
+    this.socket = io("http://localhost:3000");
+
+    this.socket.on('rest-'+channelId, (data: string) => {
+      console.log(data);
+      this.findorder();
+    });
+  }
+
+  sendMessage(message) {
+    this.socket.emit('customer-', message);
   }
 
  
   constructor(private httpService: HttpService,
     private notifyService: NotifyService,
-    public authService: AuthService
+    public authService: AuthService,
+    private cookieService: CookieService
   ) {
 
   }
 
 
   loadForm() {
-
   }
 
   async findorder() {
@@ -143,6 +161,7 @@ export class OrderComponent implements OnInit {
             )
           }
 
+          this.sendMessage({ channelId: order.qrId, body: 'hello customer'});
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
@@ -192,6 +211,7 @@ export class OrderComponent implements OnInit {
             )
           }
 
+          this.sendMessage({ channelId: order.qrId, body: 'hello customer'});
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
@@ -241,6 +261,7 @@ export class OrderComponent implements OnInit {
             )
           }
 
+          this.sendMessage({ channelId: order.qrId, body: 'hello customer'});
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
@@ -290,6 +311,7 @@ export class OrderComponent implements OnInit {
             )
           }
 
+          this.sendMessage({ channelId: order.qrId, body: 'hello customer'});
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

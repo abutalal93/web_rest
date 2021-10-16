@@ -1,18 +1,18 @@
 <app-header
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
-  [navbarBrandFull]="{src: (authService.getLoggedInUser() && authService.getLoggedInUser().avatar ? authService.getLoggedInUser().avatar: ''),  width: 50, height: 50, alt: 'Rest Logo'}"
+  [navbarBrandFull]="{src: user.avatar,  width: 50, height: 50, alt: 'Rest Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3" *ngIf="authService.getLoggedInUser() && authService.getLoggedInUser().roleId == 'SUPER_ADMIN'">
+    <li class="nav-item px-3" *ngIf="user.roleId == 'SUPER_ADMIN'">
       <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
     </li>
-    <li class="nav-item px-3" *ngIf="authService.getLoggedInUser() && authService.getLoggedInUser().roleId == 'SUPER_ADMIN'">
+    <li class="nav-item px-3" *ngIf="user.roleId == 'SUPER_ADMIN'">
       <a class="nav-link" [routerLink]="['/users']">Users</a>
     </li>
-    <li class="nav-item px-3" *ngIf="authService.getLoggedInUser() && authService.getLoggedInUser().roleId == 'SUPER_ADMIN'">
+    <li class="nav-item px-3" *ngIf="user.roleId == 'SUPER_ADMIN'">
       <a class="nav-link" [routerLink]="['/setting']">Settings</a>
     </li>
   </ul>
