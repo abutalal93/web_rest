@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://wjadtoha.com/',
+  apiUrl: 'http://localhost:8080/',
   prefix: 'core/',
   socketUrl: 'http://94.127.213.230:3000',
 };
