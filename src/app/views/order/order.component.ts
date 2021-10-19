@@ -11,6 +11,7 @@ import { SocketioService } from '../services/socket-one-service';
 import { CookieService } from 'ngx-cookie-service';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: 'order.component.html',
@@ -75,7 +76,8 @@ export class OrderComponent implements OnInit {
   constructor(private httpService: HttpService,
     private notifyService: NotifyService,
     public authService: AuthService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private route: ActivatedRoute
   ) {
 
   }
@@ -86,13 +88,15 @@ export class OrderComponent implements OnInit {
 
   async findorder() {
 
+    let qrId = this.route.snapshot.queryParamMap.get('qrId');
+
     if (!this.fromNext) {
       this.activePage = 1;
     }
 
     let request = {
       method: "GET",
-      path: "rest/order/search",
+      path: "rest/order/search?qrId="+qrId,
       body: null
     };
 

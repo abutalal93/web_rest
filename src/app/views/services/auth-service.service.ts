@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   getRedirectUrl(): string {
-    return (this.loggedInUser.roleId == 'SUPER_ADMIN') ? this.redirectUrl: '/order';
+    return (this.loggedInUser.roleId == 'SUPER_ADMIN') ? this.redirectUrl: '/table';
   }
 
   setRedirectUrl(url: string): void {

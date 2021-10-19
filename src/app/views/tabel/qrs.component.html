@@ -1,0 +1,148 @@
+<div *ngIf="showTable" [@fadeInOutTranslate] class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fa fa-align-justify"></i> Tabel List
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped table-responsive-sm">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Table Name</th>
+            <th>Create Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="qrsList.length === 0">
+            <td style="text-align: center;color: red" colspan="5">
+              "No data found"
+            </td>
+          </tr>
+          <tr *ngFor="let qr of qrsList">
+            <td>
+              <a target="_blank" [href]="qr.code">
+                <!-- <qrcode [qrdata]="qr.code" [width]="128" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode> -->
+                <qr-img img="{{ qrLogo }}" content="{{ qr.code }}" 
+              size="150"
+              img-width="30"
+              img-height="30"
+              (change)="someFunction($event)">
+            </qr-img>
+              </a>
+            </td>
+            <td data-title="Table Name"> {{ qr.alias }}</td>
+            <td data-title="Create Date"> {{ qr.createDate  | date:'short' }}</td>
+            <td data-title="Status">
+              <span *ngIf="qr.status == 'ACTIVE'" class="badge badge-success">Active</span>
+              <span *ngIf="qr.status == 'INACTIVE'" class="badge badge-warning">Inactive</span>
+            </td>
+            <td>
+              <button (click)='navigate(qr)' type="button" class="btn btn-primary">Pending Orders</button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">
+              <nav>
+                <ul class="pagination">
+                  <li *ngFor="let page of pages" (click)="onSelect(page)" [class.active]="page.pageName === activePage"
+                    class="page-item">
+                    <a class="page-link" href="javascript:void(0)">{{
+                      page.pageName
+                      }}</a>
+                  </li>
+                </ul>
+              </nav>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="!showTable && !editMode" [@fadeInOutTranslate] class="col-lg-12">
+  <form [formGroup]="qrForm" (ngSubmit)="save()">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Add QR</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.qrForm.reset();">Back</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Table Name</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': qrForm.controls.alias.invalid && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)}" [formControl]="qrForm.controls['alias']" id="alias" placeholder="Enter QR Alias">
+              <div class="invalid-feedback" *ngIf="qrForm.controls.alias.errors && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)">
+                <div *ngIf="qrForm.controls.alias.errors.required">Table name required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="save()">Save</button>
+              <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+                (click)="showTable = !showTable; this.itemForm.reset();">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div *ngIf="!showTable && editMode" [@fadeInOutTranslate] class="col-lg-12">
+  <form [formGroup]="qrForm" (ngSubmit)="save()">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-10">
+            <h6>Update QR</h6>
+          </div>
+          <div class="col-md-2 float-right card-right-button">
+            <button type="button" class="btn btn-sm btn-primary" (click)="showTable = !showTable; this.qrForm.reset();">Back</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="required" for="name">Table Name</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': qrForm.controls.alias.invalid && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)}" [formControl]="qrForm.controls['alias']" id="alias" placeholder="Enter QR Alias">
+              <div class="invalid-feedback" *ngIf="qrForm.controls.alias.errors && (qrForm.controls.alias.dirty || qrForm.controls.alias.touched)">
+                <div *ngIf="qrForm.controls.alias.errors.required">Table name required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button style="margin: 2px;" type="button" class="btn btn-primary px-4" (click)="update()">Save</button>
+              <button style="margin: 2px;" type="button" class="btn btn-success px-4"
+                (click)="showTable = !showTable; this.itemForm.reset();">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

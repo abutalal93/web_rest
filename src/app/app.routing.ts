@@ -100,6 +100,10 @@ export const routes: Routes = [
       {
         path: 'order-history',
         loadChildren: () => import('./views/order-history/order-history.module').then(m => m.OrderHistoryModule)
+      },
+      {
+        path: 'table',
+        loadChildren: () => import('./views/tabel/qrs.module').then(m => m.QrsModule)
       }
     ]
   },
