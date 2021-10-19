@@ -83,7 +83,7 @@ export class DiscountComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/discount/search",
+      path: "rest/discount/search?page="+this.page+"&size="+this.pageSize,
       body: null
     };
 
@@ -109,7 +109,7 @@ export class DiscountComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/item/search?page=0&size=100",
+      path: "rest/item/search?page=0&size=1000",
       body: null
     };
 
@@ -131,6 +131,7 @@ export class DiscountComponent implements OnInit {
 
   async onSelect(page) {
     this.activePage = page.pageName;
+    this.page = this.activePage-1
     this.fromNext = true;
     await this.findItem();
     console.log("+this.activePage+", this.activePage);

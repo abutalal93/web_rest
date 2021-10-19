@@ -12,6 +12,11 @@ import Swal from 'sweetalert2'
 })
 export class ItemComponent implements OnInit {
 
+  code = '';
+  nameEn = '';
+  nameAr = '';
+  categoryId= '';
+
 
   categoryList = [];
 
@@ -66,7 +71,7 @@ export class ItemComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/category/search?page=0&size=100",
+      path: "rest/category/search?page=0&size=1000",
       body: null
     };
 
@@ -74,11 +79,6 @@ export class ItemComponent implements OnInit {
     console.log(response);
     if (response.status == 200) {
       this.categoryList = response.data.pageList;
-      let numberOfPages = response.data.numberOfPages;
-      this.fillPageArray(numberOfPages);
-    } else {
-      this.fillPageArray(1);
-      this.categoryList = [];
     }
 
     this.fromNext = false;
@@ -126,7 +126,7 @@ export class ItemComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/item/search?page=0&size=100",
+      path: "rest/item/search?page="+this.page+"&size="+this.pageSize,
       body: null
     };
 
@@ -154,6 +154,7 @@ export class ItemComponent implements OnInit {
 
   async onSelect(page) {
     this.activePage = page.pageName;
+    this.page = this.activePage-1
     this.fromNext = true;
     await this.findItem();
     console.log("+this.activePage+", this.activePage);

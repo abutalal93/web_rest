@@ -15,6 +15,8 @@ export class QrsComponent implements OnInit {
 
   @ViewChild('qrCode', {static : false}) qrCode:any;
 
+  tableName = '';
+
   qrsList = [];
 
   page = 0;
@@ -57,7 +59,7 @@ export class QrsComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/qr/search",
+      path: "rest/qr/search?page="+this.page+"&size="+this.pageSize,
       body: null
     };
 
@@ -85,6 +87,7 @@ export class QrsComponent implements OnInit {
 
   async onSelect(page) {
     this.activePage = page.pageName;
+    this.page = this.activePage-1
     this.fromNext = true;
     await this.findQrs();
     console.log("+this.activePage+", this.activePage);

@@ -67,7 +67,7 @@ export class OrderHistoryComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/order/history?reference="+this.reference+"&dateFrom="+this.dateFrom+"&dateTo"+this.dateTo+"&page=0&size=500",
+      path: "rest/order/history?reference="+this.reference+"&dateFrom="+this.dateFrom+"&dateTo"+this.dateTo+"&page="+this.page+"&size="+this.pageSize,
       body: null
     };
 
@@ -95,6 +95,7 @@ export class OrderHistoryComponent implements OnInit {
 
   async onSelect(page) {
     this.activePage = page.pageName;
+    this.page = this.activePage-1
     this.fromNext = true;
     await this.findOrderHistory();
     console.log("+this.activePage+", this.activePage);

@@ -13,6 +13,9 @@ import Swal from 'sweetalert2'
 export class MenuComponent implements OnInit {
 
 
+  code = '';
+  nameEn = '';
+  nameAr = '';
 
   categoryList = [];
 
@@ -55,7 +58,7 @@ export class MenuComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/category/search?page=0&size=100",
+      path: "rest/category/search?code="+this.code+"&nameEn="+this.nameEn+"&nameAr="+this.nameAr+"&page="+this.page+"&size="+this.pageSize,
       body: null
     };
 
@@ -83,6 +86,7 @@ export class MenuComponent implements OnInit {
 
   async onSelect(page) {
     this.activePage = page.pageName;
+    this.page = this.activePage-1
     this.fromNext = true;
     await this.findCategory();
     console.log("+this.activePage+", this.activePage);
