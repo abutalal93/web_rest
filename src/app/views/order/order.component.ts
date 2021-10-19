@@ -88,7 +88,11 @@ export class OrderComponent implements OnInit {
 
   async findorder() {
 
-    let qrId = this.route.snapshot.queryParamMap.get('qrId');
+    let qrId: number = Number(this.route.snapshot.queryParamMap.get('qrId'));
+
+    if(qrId == null){
+      qrId = 0;
+    }
 
     if (!this.fromNext) {
       this.activePage = 1;

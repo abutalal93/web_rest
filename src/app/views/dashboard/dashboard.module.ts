@@ -7,6 +7,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CommonModule } from '@angular/common';
+import { NgxQrWithImageModule } from 'ngx-qr-with-image';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
-    CommonModule
+    CommonModule,
+    NgxQrWithImageModule
   ],
   declarations: [ DashboardComponent ]
 })
