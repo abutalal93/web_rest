@@ -47,7 +47,7 @@ import { HttpService } from './views/services/http.service';
 import { AuthService } from './views/services/auth-service.service';
 import { AuthGuardService } from './views/services/auth-guard-service.service';
 import { HttpModule } from '@angular/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
 import { NotifyService } from './views/services/notify.service';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
@@ -59,6 +59,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { SocketIoModule } from 'ngx-socket-io';
 import { SocketioService } from './views/services/socket-one-service';
 import { SocketTwo } from './views/services/socket-two-service';
+import { DataFilterPipe } from './views/services/data-filter.pipe';
 
 @NgModule({
   imports: [
@@ -83,6 +84,7 @@ import { SocketTwo } from './views/services/socket-two-service';
     LoadingBarHttpModule,
     QRCodeModule,
     ModalModule.forRoot(),
+    FormsModule
   ],
   declarations: [
     AppComponent,
@@ -92,7 +94,8 @@ import { SocketTwo } from './views/services/socket-two-service';
     LoginComponent,
     RegisterComponent,
     CustomerComponent,
-    CompetitionComponent
+    CompetitionComponent,
+    DataFilterPipe,
   ],
   providers: [
     {

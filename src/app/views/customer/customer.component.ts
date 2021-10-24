@@ -44,6 +44,15 @@ export class CustomerComponent implements OnInit {
   selectedCategory = null;
   selectedProduct = null;
 
+  selectedOrder = null;
+  showInvoice = false;
+
+  search = '';
+
+  searchItemList = [];
+
+  showSearch = false;
+
 
   checked: false;
 
@@ -55,6 +64,19 @@ export class CustomerComponent implements OnInit {
     private notifyService: NotifyService,
     private socketService: SocketioService) {
 
+  }
+
+
+  searchItem(event: any) {
+    console.log('searchItem: ')
+    this.search = event.target.value;
+    if(this.search.length > 0){
+      console.log('this.search: '+this.search)
+      this.showSearch = true;
+    }else{
+      console.log('false')
+      this.showSearch = false;
+    }
   }
 
   sendMessage(message) {
@@ -90,6 +112,7 @@ export class CustomerComponent implements OnInit {
       this.qrInfo.categoryList.forEach(category => {
         category.itemList.map(v => Object.assign(v, { quantity: 1 }))
         category.itemList.forEach(item => {
+          this.searchItemList.push(item);
           if(item.itemSpecs && item.itemSpecs.detailList.length > 0){
             item.itemSpecs.detailList.forEach(detail => {
               this.orderForm.addControl('detail' + detail.id, new FormControl(null));
@@ -140,6 +163,13 @@ export class CustomerComponent implements OnInit {
 
   viewCategoty() {
     this.currentItemList = [];
+  }
+
+  backInvoice(){
+    this.showRunningOrder = true;
+    this.showCart = false;
+    this.showMenu = false;
+    this.showInvoice = false;
   }
 
 
@@ -313,5 +343,13 @@ export class CustomerComponent implements OnInit {
 
   clearSelectedItems() {
     this.selectedItemList = [];
+  }
+
+  viewInvoice(order){
+    this.showRunningOrder = false;
+    this.showCart = false;
+    this.showMenu = false;
+    this.showInvoice = true;
+    this.selectedOrder = order;
   }
 }

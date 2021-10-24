@@ -126,7 +126,7 @@ export class ItemComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/item/search?page="+this.page+"&size="+this.pageSize,
+      path: "rest/item/search?code="+this.code+"&nameEn="+this.nameEn+"&nameAr="+this.nameAr+"&categoryId="+this.categoryId+"&page="+this.page+"&size="+this.pageSize,
       body: null
     };
 

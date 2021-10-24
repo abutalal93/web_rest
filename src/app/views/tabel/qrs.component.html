@@ -26,7 +26,7 @@
           </tr>
           <tr *ngFor="let qr of qrsList">
             <td>
-              <a target="_blank" [href]="qr.code">
+              <a (click)='navigate(qr)' target="_blank">
                 <!-- <qrcode [qrdata]="qr.code" [width]="128" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode> -->
                 <qr-img img="{{ qrLogo }}" content="{{ qr.code }}" 
               size="150"
