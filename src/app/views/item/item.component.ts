@@ -12,10 +12,24 @@ import Swal from 'sweetalert2'
 })
 export class ItemComponent implements OnInit {
 
+  statusList = [
+    {
+      id: 'ACTIVE',
+      name: 'Active'
+    },
+    {
+      id: 'INACTIVE',
+      name: 'Inactive'
+    }
+  ]
+
   code = '';
   nameEn = '';
   nameAr = '';
   categoryId= '';
+  statusId = '';
+  priceFrom = '';
+  priceTo = ''
 
 
   categoryList = [];

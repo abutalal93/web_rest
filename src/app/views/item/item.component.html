@@ -34,10 +34,30 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="required" for="ccmonth">Category</label>
+            <label for="ccmonth">Category</label>
             <select [(ngModel)]="categoryId" class="form-control" id="region">
               <option *ngFor="let category of categoryList" [value]="category.id">{{ category.nameEn }}</option>
             </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="ccmonth">Status</label>
+            <select [(ngModel)]="statusId" class="form-control" id="region">
+              <option *ngFor="let status of statusList" [value]="status.id">{{ status.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Price From</label>
+            <input type="number" class="form-control" [(ngModel)]="priceFrom" id="alias" placeholder="Price From">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="name">Price to</label>
+            <input type="number" class="form-control" [(ngModel)]="priceTo" id="alias" placeholder="Price to">
           </div>
         </div>
         <div class="col-sm-4">

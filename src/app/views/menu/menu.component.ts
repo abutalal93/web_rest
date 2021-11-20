@@ -13,9 +13,21 @@ import Swal from 'sweetalert2'
 export class MenuComponent implements OnInit {
 
 
+  statusList = [
+    {
+      id: 'ACTIVE',
+      name: 'Active'
+    },
+    {
+      id: 'INACTIVE',
+      name: 'Inactive'
+    }
+  ]
+
   code = '';
   nameEn = '';
   nameAr = '';
+  statusId = '';
 
   categoryList = [];
 

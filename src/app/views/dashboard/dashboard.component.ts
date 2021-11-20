@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
 
   // Pie
   public pieChartLabels: string[] = [];
-  public pieChartColors: string[] = [this.ALL_ORDER_COLOR,this.CLOSED_ORDER_COLOR,this.CANCELED_ORDER_COLOR];
   public pieChartData: number[] = [];
   public pieChartType = 'pie';
 
@@ -77,7 +76,7 @@ export class DashboardComponent implements OnInit {
   };
   public lineChartColours: Array<any> = [
     { // grey
-      backgroundColor: this.ALL_ORDER_COLOR,
+      // backgroundColor: this.ALL_ORDER_COLOR,
       borderColor: this.ALL_ORDER_COLOR,
       pointBackgroundColor: this.ALL_ORDER_COLOR,
       pointBorderColor: this.ALL_ORDER_COLOR,
@@ -85,7 +84,7 @@ export class DashboardComponent implements OnInit {
       pointHoverBorderColor: this.ALL_ORDER_COLOR
     },
     { // dark grey
-      backgroundColor: this.CLOSED_ORDER_COLOR,
+      // backgroundColor: this.CLOSED_ORDER_COLOR,
       borderColor: this.CLOSED_ORDER_COLOR,
       pointBackgroundColor: this.CLOSED_ORDER_COLOR,
       pointBorderColor: this.CLOSED_ORDER_COLOR,
@@ -93,7 +92,7 @@ export class DashboardComponent implements OnInit {
       pointHoverBorderColor: this.CLOSED_ORDER_COLOR
     },
     { // grey
-      backgroundColor: this.CANCELED_ORDER_COLOR,
+      // backgroundColor: this.CANCELED_ORDER_COLOR,
       borderColor: this.CANCELED_ORDER_COLOR,
       pointBackgroundColor: this.CANCELED_ORDER_COLOR,
       pointBorderColor: this.CANCELED_ORDER_COLOR,
@@ -146,7 +145,7 @@ export class DashboardComponent implements OnInit {
 
       this.pieChartLabels = ['All Orders', 'Closed Orders', 'Canceled Orders'];
       this.pieChartData = [this.dashboardData.allOrder.count, this.dashboardData.closedOrder.count, this.dashboardData.canceledOrder.count];
-      
+
       this.doughnutChartLabels = ['All Orders', 'Closed Orders', 'Canceled Orders'];
       this.doughnutChartData = [this.dashboardData.allOrder.value, this.dashboardData.closedOrder.value, this.dashboardData.canceledOrder.value];
 
@@ -172,6 +171,15 @@ export class DashboardComponent implements OnInit {
 
   public chartHovered(e: any): void {
     console.log(e);
+  }
+
+
+  findPercentage(value, allOrder){
+    if(allOrder == 0){
+      return 0;
+    }
+    let result = ((value / allOrder) * 100).toFixed(2);
+    return result;
   }
 
 }
