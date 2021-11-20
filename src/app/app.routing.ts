@@ -102,6 +102,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/order-history/order-history.module').then(m => m.OrderHistoryModule)
       },
       {
+        path: 'profile',
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+      },
+      {
         path: 'table',
         loadChildren: () => import('./views/tabel/qrs.module').then(m => m.QrsModule)
       }

@@ -40,5 +40,10 @@ export const navItems: INavData[] = [
     name: 'Users',
     url: '/users',
     icon: 'cil-user'
-  }
+  },
+  {
+    name: 'Setting',
+    url: '/setting',
+    icon: 'cil-settings'
+  },
 ];

@@ -5,8 +5,8 @@
         <div class="col-md-8 mx-auto">
           <div class="card-group">
             <div class="card p-4">
-              <div class="card-body">
-                <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <div *ngIf="!isForgetForm" class="card-body">
+                <form [formGroup]="loginForm">
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
                   <div class="input-group mb-3">
@@ -29,10 +29,33 @@
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <button type="submit" class="btn btn-primary px-4">Login</button>
+                      <button type="button" (click)="login()" class="btn btn-primary px-4">Login</button>
                     </div>
                     <div class="col-6 text-right">
-                      <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                      <button (click)="isForgetForm = !isForgetForm" type="button" class="btn btn-link px-0">Forgot password?</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div *ngIf="isForgetForm" class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <h1>Forget Password</h1>
+                  <p class="text-muted">Enter your username to reset your password</p>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid': loginForm.controls.username.invalid && loginForm.controls.username.dirty}" [formControl]="loginForm.controls['username']" class="form-control" placeholder="Username">
+                    <div class="invalid-feedback" *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
+                      <div *ngIf="loginForm.controls.username.errors.required">Username required</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="button" (click)="resetPassord()" class="btn btn-primary px-4">Reset</button>
+                    </div>
+                    <div class="col-6 text-right">
+                      <button (click)="isForgetForm = !isForgetForm" type="button" class="btn btn-link px-0">Back to login?</button>
                     </div>
                   </div>
                 </form>

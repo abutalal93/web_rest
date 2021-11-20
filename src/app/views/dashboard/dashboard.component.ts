@@ -13,6 +13,15 @@ export class DashboardComponent implements OnInit {
 
   radioModel: string = 'Day';
 
+  searchByDate = false;
+
+  dateFrom = '';
+  dateTo = '';
+
+  ALL_ORDER_COLOR = "#63c2de"
+  CLOSED_ORDER_COLOR = "#4dbd74"
+  CANCELED_ORDER_COLOR = "#f86c6b"
+
   // barChart
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -31,13 +40,14 @@ export class DashboardComponent implements OnInit {
   public barChartLegend = true;
 
   public barChartData: any[] = [
-    { data: [], label: 'All Orders' },
-    { data: [], label: 'Closed Orders' },
-    { data: [], label: 'Canceled Orders' }
+    { data: [], label: 'All Orders', backgroundColor: this.ALL_ORDER_COLOR, hoverBackgroundColor: this.ALL_ORDER_COLOR },
+    { data: [], label: 'Closed Orders', backgroundColor: this.CLOSED_ORDER_COLOR, hoverBackgroundColor: this.CLOSED_ORDER_COLOR },
+    { data: [], label: 'Canceled Orders', backgroundColor: this.CANCELED_ORDER_COLOR, hoverBackgroundColor: this.CANCELED_ORDER_COLOR }
   ];
 
   // Pie
   public pieChartLabels: string[] = [];
+  public pieChartColors: string[] = [this.ALL_ORDER_COLOR,this.CLOSED_ORDER_COLOR,this.CANCELED_ORDER_COLOR];
   public pieChartData: number[] = [];
   public pieChartType = 'pie';
 
@@ -67,28 +77,28 @@ export class DashboardComponent implements OnInit {
   };
   public lineChartColours: Array<any> = [
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      backgroundColor: this.ALL_ORDER_COLOR,
+      borderColor: this.ALL_ORDER_COLOR,
+      pointBackgroundColor: this.ALL_ORDER_COLOR,
+      pointBorderColor: this.ALL_ORDER_COLOR,
+      pointHoverBackgroundColor: this.ALL_ORDER_COLOR,
+      pointHoverBorderColor: this.ALL_ORDER_COLOR
     },
     { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+      backgroundColor: this.CLOSED_ORDER_COLOR,
+      borderColor: this.CLOSED_ORDER_COLOR,
+      pointBackgroundColor: this.CLOSED_ORDER_COLOR,
+      pointBorderColor: this.CLOSED_ORDER_COLOR,
+      pointHoverBackgroundColor: this.CLOSED_ORDER_COLOR,
+      pointHoverBorderColor: this.CLOSED_ORDER_COLOR
     },
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      backgroundColor: this.CANCELED_ORDER_COLOR,
+      borderColor: this.CANCELED_ORDER_COLOR,
+      pointBackgroundColor: this.CANCELED_ORDER_COLOR,
+      pointBorderColor: this.CANCELED_ORDER_COLOR,
+      pointHoverBackgroundColor: this.CANCELED_ORDER_COLOR,
+      pointHoverBorderColor: this.CANCELED_ORDER_COLOR
     }
   ];
   public lineChartLegend = true;
@@ -124,7 +134,7 @@ export class DashboardComponent implements OnInit {
 
     let request = {
       method: "GET",
-      path: "rest/dashboard?type=" + type,
+      path: "rest/dashboard?type=" + type + "&dateFrom=" + this.dateFrom + "&dateTo=" + this.dateTo,
       body: null
     };
 
@@ -136,7 +146,7 @@ export class DashboardComponent implements OnInit {
 
       this.pieChartLabels = ['All Orders', 'Closed Orders', 'Canceled Orders'];
       this.pieChartData = [this.dashboardData.allOrder.count, this.dashboardData.closedOrder.count, this.dashboardData.canceledOrder.count];
-
+      
       this.doughnutChartLabels = ['All Orders', 'Closed Orders', 'Canceled Orders'];
       this.doughnutChartData = [this.dashboardData.allOrder.value, this.dashboardData.closedOrder.value, this.dashboardData.canceledOrder.value];
 

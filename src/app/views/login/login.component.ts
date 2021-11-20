@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit{
 
   position = 'top-center';
 
+  isForgetForm = false;
+
 
   ngOnInit() {
       this.loadForm();
@@ -67,4 +69,25 @@ export class LoginComponent implements OnInit{
   }
 
 
+  async resetPassord(){
+    this.httpService.markFormGroupTouched(this.loginForm);
+
+      let request = {
+        method: "POST",
+        path: "rest/user/forget",
+        body: this.loginForm.value
+      };
+
+      let response = await this.httpService.httpRequest(request);
+      console.log(response);
+      if(response.status == 200){
+
+        this.isForgetForm = ! this.isForgetForm;
+
+        this.notifyService.addToast({ title: "Success", msg: "Operation Done Successfully", timeout: 10000, theme: '', position: 'top-center', type: 'success' });
+      }else{
+        this.notifyService.addToast({ title: "Error", msg: response.message, timeout: 10000, theme: '', position: 'top-center', type: 'error' });
+      }
+    
+  }
 }
