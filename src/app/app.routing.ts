@@ -39,13 +39,13 @@ export const routes: Routes = [
       title: 'Login Page'
     }
   },
-  {
-    path: 'customer',
-    component: CustomerComponent,
-    data: {
-      title: 'Customer Page'
-    }
-  },
+  // {
+  //   path: 'customer',
+  //   component: CustomerComponent,
+  //   data: {
+  //     title: 'Customer Page'
+  //   }
+  // },
   {
     path: 'competition',
     component: CompetitionComponent,
